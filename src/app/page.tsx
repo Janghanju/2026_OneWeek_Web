@@ -1,60 +1,85 @@
 import Link from "next/link";
-import styles from "./page.module.css";
-import { ArrowRight, Github, Terminal } from "lucide-react";
+import styles from "./home.module.css";
+import { ArrowRight, Code, Globe, Rocket, ShieldCheck } from "lucide-react";
+import { Navbar } from "@/components/navbar";
 
 export default function Home() {
   return (
     <main className={styles.main}>
-      <div className={styles.hero}>
-        <h1 className={`${styles.title} text-gradient`}>
-          Re:Zero
-          <br />
-          <span style={{ fontSize: "0.5em", fontWeight: 400, color: "var(--foreground)" }}>
-            Jang Hanju
-          </span>
-        </h1>
-        
-        <p className={styles.subtitle}>
-          Premium Freelance Services & Real-time Tech Insights.
-          <br />
-          Building the future of web with precision and elegance.
-        </p>
+      <Navbar />
 
-        <div className={styles.ctaGroup}>
+      {/* Hero Section */}
+      <section className={styles.hero}>
+        <h1 className={styles.heroTitle}>
+          Build Your Digital Empire <br />
+          <span style={{ color: 'var(--primary)' }}>With Precision.</span>
+        </h1>
+        <p className={styles.heroSubtitle}>
+          Premium web development services and real-time tech insights.
+          We transform ideas into scalable, high-performance applications.
+        </p>
+        <div className={styles.heroCta}>
           <Link href="/services" className={styles.primaryBtn}>
-            Start a Project <ArrowRight size={20} style={{ marginLeft: "0.5rem" }} />
+            Start Project <ArrowRight size={20} />
           </Link>
           <Link href="/portfolio" className={styles.secondaryBtn}>
-            View Portfolio
+            View Work
           </Link>
         </div>
+      </section>
 
-        <div className={styles.features}>
-          <div className={`${styles.card} glass-panel`}>
-            <Terminal size={32} color="var(--primary)" style={{ marginBottom: "1rem" }} />
-            <h3 className={styles.cardTitle}>Advanced Development</h3>
-            <p className={styles.cardDesc}>
-              Next.js, React, and modern web technologies tailored for performance and scale.
+      {/* Services Section */}
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Our Expertise</h2>
+        <p className={styles.sectionDesc}>
+          Delivering enterprise-grade solutions with modern technologies.
+        </p>
+
+        <div className={styles.grid}>
+          <div className={styles.card}>
+            <div className={styles.cardIcon}><Globe /></div>
+            <h3 className={styles.cardTitle}>Web Development</h3>
+            <p className={styles.cardText}>
+              Full-stack applications built with Next.js, React, and Node.js.
+              SEO-optimized and performance-tuned.
             </p>
           </div>
-          
-          <div className={`${styles.card} glass-panel`}>
-            <Github size={32} color="var(--accent)" style={{ marginBottom: "1rem" }} />
-            <h3 className={styles.cardTitle}>Open Source</h3>
-            <p className={styles.cardDesc}>
-              Active contributions and transparent coding practices.
+          <div className={styles.card}>
+            <div className={styles.cardIcon}><ShieldCheck /></div>
+            <h3 className={styles.cardTitle}>Secure Systems</h3>
+            <p className={styles.cardText}>
+              Enterprise security standards, authentication, and data protection
+              baked into every project.
             </p>
           </div>
-
-          <div className={`${styles.card} glass-panel`}>
-            <div style={{ fontSize: "2rem", marginBottom: "1rem" }}>🚀</div>
-            <h3 className={styles.cardTitle}>Tech News</h3>
-            <p className={styles.cardDesc}>
-              Curated real-time news feed for developers and tech enthusiasts.
+          <div className={styles.card}>
+            <div className={styles.cardIcon}><Code /></div>
+            <h3 className={styles.cardTitle}>API Integration</h3>
+            <p className={styles.cardText}>
+              Seamless integration with third-party services, payment gateways,
+              and AI models.
             </p>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* News Preview CTA */}
+      <section className={styles.newsPreview}>
+        <Rocket size={48} color="var(--accent)" style={{ margin: '0 auto 1.5rem' }} />
+        <h2 className={styles.sectionTitle}>Stay Ahead of the Curve</h2>
+        <p className={styles.sectionDesc}>
+          Get real-time updates on the latest tech trends, frameworks, and tools.
+          Curated for developers, by developers.
+        </p>
+        <Link href="/news" className={styles.primaryBtn}>
+          Explore Tech News
+        </Link>
+      </section>
+
+      {/* Footer */}
+      <footer className={styles.footer}>
+        <p>&copy; 2025 Re:Zero. All rights reserved.</p>
+      </footer>
     </main>
   );
 }

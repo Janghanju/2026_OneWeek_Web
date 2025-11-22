@@ -1,0 +1,162 @@
+/* Global Layout */
+.main {
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--foreground);
+    overflow-x: hidden;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    padding: 8rem 2rem 6rem;
+    text-align: center;
+    background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+}
+
+.heroTitle {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.heroSubtitle {
+    font-size: 1.25rem;
+    color: var(--muted-foreground);
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    line-height: 1.6;
+}
+
+.heroCta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.primaryBtn {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    padding: 0.8rem 2rem;
+    border-radius: 999px;
+    font-weight: 600;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.primaryBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4);
+}
+
+.secondaryBtn {
+    background: var(--secondary);
+    color: var(--secondary-foreground);
+    padding: 0.8rem 2rem;
+    border-radius: 999px;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+}
+
+.secondaryBtn:hover {
+    background: var(--muted);
+}
+
+/* Section Common */
+.section {
+    padding: 6rem 2rem;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.sectionTitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.sectionDesc {
+    text-align: center;
+    color: var(--muted-foreground);
+    margin-bottom: 4rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Services Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    border-radius: var(--radius);
+    transition: all 0.3s;
+}
+
+.card:hover {
+    border-color: var(--primary);
+    transform: translateY(-5px);
+}
+
+.cardIcon {
+    width: 3rem;
+    height: 3rem;
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.cardTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.cardText {
+    color: var(--muted-foreground);
+    line-height: 1.6;
+}
+
+/* News Preview Section */
+.newsPreview {
+    background: var(--secondary);
+    border-radius: var(--radius);
+    padding: 4rem 2rem;
+    margin: 4rem 2rem;
+    text-align: center;
+}
+
+/* Footer */
+.footer {
+    border-top: 1px solid var(--border);
+    padding: 4rem 2rem;
+    text-align: center;
+    color: var(--muted-foreground);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .heroTitle {
+        font-size: 2.5rem;
+    }
+
+    .section {
+        padding: 4rem 1.5rem;
+    }
+}
