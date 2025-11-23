@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: rezero-web
+    container_name: oneweek-web
     restart: always
     ports:
       - "3000:3000"

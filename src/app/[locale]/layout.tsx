@@ -7,8 +7,8 @@ import { getMessages } from 'next-intl/server';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Jang Hanju | Premium Portfolio & Tech News",
-  description: "A premium portfolio and tech news aggregation service.",
+  title: "One Week | Jang Hanju - Premium Portfolio & Tech News",
+  description: "One Week - A premium portfolio and tech news aggregation service.",
 };
 
 export default async function RootLayout({
@@ -22,7 +22,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           {children}

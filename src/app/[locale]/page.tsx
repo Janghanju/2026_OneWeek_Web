@@ -74,7 +74,7 @@ export default function Home() {
       </section>
 
       <footer className={styles.footer}>
-        <p>© 2026 Re:Zero. All rights reserved.</p>
+        <p>© 2026 One Week. All rights reserved.</p>
       </footer>
     </div>
   );

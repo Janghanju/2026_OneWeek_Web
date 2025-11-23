@@ -1,4 +1,4 @@
-# Re:Zero - Jang Hanju Portfolio & Tech News
+# One Week - Jang Hanju Portfolio & Tech News
 
 이 프로젝트는 Next.js 14+ (App Router)를 기반으로 구축된 프리미엄 포트폴리오 및 IT 뉴스 플랫폼입니다.
 
