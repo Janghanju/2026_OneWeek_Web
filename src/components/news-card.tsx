@@ -1,7 +1,7 @@
 import React from 'react';
 import { NewsItem } from '@/lib/crawler';
 import { ExternalLink, MessageSquare, Share2, ThumbsUp, Zap } from 'lucide-react';
-import styles from '@/app/news/news.module.css';
+import styles from '@/app/[locale]/news/news.module.css';
 
 interface NewsCardProps {
     item: NewsItem;

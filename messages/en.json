@@ -1,0 +1,39 @@
+{
+    "Navbar": {
+        "home": "Home",
+        "services": "Services",
+        "portfolio": "Portfolio",
+        "news": "News",
+        "login": "Login"
+    },
+    "Home": {
+        "heroTitle": "Build Your Future with Tech",
+        "heroSubtitle": "Premium Web Development & Tech News Aggregation",
+        "getStarted": "Get Started",
+        "viewPortfolio": "View Portfolio",
+        "servicesTitle": "Our Services",
+        "newsTitle": "Latest Tech News"
+    },
+    "Services": {
+        "title": "Our Services",
+        "webDev": "Web Development",
+        "webDevDesc": "High-performance, responsive websites built with Next.js.",
+        "appDev": "App Development",
+        "appDevDesc": "Cross-platform mobile apps using React Native.",
+        "consulting": "Tech Consulting",
+        "consultingDesc": "Expert advice on your tech stack and architecture."
+    },
+    "Portfolio": {
+        "title": "Our Work",
+        "desc": "Check out our latest projects."
+    },
+    "Login": {
+        "title": "Welcome Back",
+        "subtitle": "Sign in to continue to your account",
+        "email": "Email",
+        "password": "Password",
+        "signIn": "Sign In",
+        "continueWithGithub": "Continue with GitHub",
+        "demoHint": "Demo: use user@example.com / password"
+    }
+}

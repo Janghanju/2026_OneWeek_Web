@@ -3,8 +3,11 @@ import { NewsList } from '@/components/news-list';
 import styles from './news.module.css';
 import { Flame, Hash, LayoutGrid, MessageCircle, TrendingUp } from 'lucide-react';
 import { Navbar } from '@/components/navbar';
+import { useTranslations } from 'next-intl';
 
 export default function NewsPage() {
+    const t = useTranslations('Navbar'); // Using Navbar namespace for now as placeholder
+
     return (
         <div className={styles.container}>
             <Navbar />
@@ -12,7 +15,7 @@ export default function NewsPage() {
                 <div>
                     <h1 className={styles.title}>Tech Insight</h1>
                     <p className={styles.subtitle}>
-                        실시간 개발자 뉴스 & 커뮤니티
+                        Real-time Developer News & Community
                     </p>
                 </div>
             </header>
@@ -20,19 +23,19 @@ export default function NewsPage() {
             <aside className={styles.sidebar}>
                 <div className={`${styles.navItem} ${styles.active}`}>
                     <LayoutGrid size={20} />
-                    <span>전체 뉴스</span>
+                    <span>All News</span>
                 </div>
                 <div className={styles.navItem}>
                     <Flame size={20} />
-                    <span>인기 글</span>
+                    <span>Popular</span>
                 </div>
                 <div className={styles.navItem}>
                     <MessageCircle size={20} />
-                    <span>토론</span>
+                    <span>Discussions</span>
                 </div>
                 <div className={styles.navItem}>
                     <Hash size={20} />
-                    <span>태그</span>
+                    <span>Tags</span>
                 </div>
             </aside>
 
@@ -44,7 +47,7 @@ export default function NewsPage() {
                 <div className={styles.trending}>
                     <div className={styles.trendingTitle}>
                         <TrendingUp size={20} color="var(--primary)" />
-                        <span>실시간 인기 검색어</span>
+                        <span>Trending Keywords</span>
                     </div>
                     <div className={styles.trendingItem}>
                         <span className={styles.trendingRank}>1</span> React 19

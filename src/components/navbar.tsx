@@ -1,20 +1,28 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Link, usePathname, useRouter } from '@/i18n/routing';
+import { Menu, X, Globe, Moon, Sun } from 'lucide-react';
 import { useState } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
 
 export function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
+    const router = useRouter();
+    const locale = useLocale();
+    const t = useTranslations('Navbar');
 
     const navItems = [
-        { name: 'Home', href: '/' },
-        { name: 'Services', href: '/services' },
-        { name: 'Portfolio', href: '/portfolio' },
-        { name: 'News', href: '/news' },
+        { name: t('home'), href: '/' },
+        { name: t('services'), href: '/services' },
+        { name: t('portfolio'), href: '/portfolio' },
+        { name: t('news'), href: '/news' },
     ];
+
+    const toggleLocale = () => {
+        const nextLocale = locale === 'en' ? 'ko' : 'en';
+        router.replace(pathname, { locale: nextLocale });
+    };
 
     return (
         <nav style={{
@@ -43,7 +51,7 @@ export function Navbar() {
                 <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }} className="hidden md:flex">
                     {navItems.map((item) => (
                         <Link
-                            key={item.name}
+                            key={item.href}
                             href={item.href}
                             style={{
                                 color: pathname === item.href ? 'var(--primary)' : 'var(--muted-foreground)',
@@ -54,6 +62,11 @@ export function Navbar() {
                             {item.name}
                         </Link>
                     ))}
+
+                    <button onClick={toggleLocale} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--foreground)' }}>
+                        <Globe size={20} />
+                    </button>
+
                     <Link
                         href="/login"
                         style={{
@@ -65,7 +78,7 @@ export function Navbar() {
                             fontSize: '0.9rem'
                         }}
                     >
-                        Login
+                        {t('login')}
                     </Link>
                 </div>
 

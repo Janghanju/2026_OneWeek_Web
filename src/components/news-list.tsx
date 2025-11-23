@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { NewsItem } from '@/lib/crawler';
 import { NewsCard } from './news-card';
-import styles from '@/app/news/news.module.css';
+import styles from '@/app/[locale]/news/news.module.css';
 import { RefreshCw } from 'lucide-react';
 
 export function NewsList() {

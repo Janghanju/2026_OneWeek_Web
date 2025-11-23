@@ -1,36 +1,34 @@
-import NextAuth from "next-auth"
-import Credentials from "next-auth/providers/credentials"
-import GitHub from "next-auth/providers/github"
-import { z } from "zod"
+import { NextAuthOptions } from "next-auth"
+import CredentialsProvider from "next-auth/providers/credentials"
+import GitHubProvider from "next-auth/providers/github"
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const authOptions: NextAuthOptions = {
     providers: [
-        GitHub,
-        Credentials({
+        GitHubProvider({
+            clientId: process.env.GITHUB_ID ?? "",
+            clientSecret: process.env.GITHUB_SECRET ?? "",
+        }),
+        CredentialsProvider({
+            name: "Credentials",
             credentials: {
                 email: { label: "Email", type: "email" },
-                password: { label: "Password", type: "password" },
+                password: { label: "Password", type: "password" }
             },
-            authorize: async (credentials) => {
-                const parsedCredentials = z
-                    .object({ email: z.string().email(), password: z.string().min(6) })
-                    .safeParse(credentials)
-
-                if (parsedCredentials.success) {
-                    // Mock user for demonstration
-                    if (parsedCredentials.data.email === "user@example.com" && parsedCredentials.data.password === "password") {
-                        return {
-                            id: "1",
-                            name: "Demo User",
-                            email: parsedCredentials.data.email,
-                        }
+            async authorize(credentials) {
+                // Mock user for demonstration
+                if (credentials?.email === "user@example.com" && credentials?.password === "password") {
+                    return {
+                        id: "1",
+                        name: "Demo User",
+                        email: credentials.email,
                     }
                 }
                 return null
-            },
-        }),
+            }
+        })
     ],
     pages: {
         signIn: '/login',
     },
-})
+    secret: process.env.AUTH_SECRET || "debug_secret",
+}

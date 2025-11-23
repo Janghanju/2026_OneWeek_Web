@@ -1,0 +1,278 @@
+/* Container */
+.container {
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--foreground);
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 2rem 4rem;
+    overflow: hidden;
+}
+
+.heroContent {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 999px;
+    color: var(--primary);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+.badgeIcon {
+    color: var(--primary);
+}
+
+.title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(to right, var(--foreground), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: var(--muted-foreground);
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    line-height: 1.6;
+}
+
+.ctaGroup {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.primaryBtn {
+    background: var(--primary);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 999px;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    border: none;
+}
+
+.primaryBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -5px rgba(59, 130, 246, 0.5);
+}
+
+.secondaryBtn {
+    background: transparent;
+    color: var(--foreground);
+    padding: 1rem 2rem;
+    border-radius: 999px;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.secondaryBtn:hover {
+    background: var(--muted);
+    border-color: var(--primary);
+}
+
+.heroVisual {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.glow {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+    filter: blur(60px);
+}
+
+.grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.5;
+}
+
+/* Services Section */
+.services {
+    padding: 6rem 2rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    background: var(--background);
+}
+
+.sectionTitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.serviceGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.serviceCard {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    border-radius: var(--radius);
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.serviceCard:hover {
+    border-color: var(--primary);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+}
+
+.serviceIcon {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.serviceCard h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.serviceCard p {
+    color: var(--muted-foreground);
+    line-height: 1.6;
+}
+
+/* News CTA Section */
+.newsCta {
+    padding: 4rem 2rem;
+    margin: 4rem auto;
+    max-width: 900px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
+    border-radius: var(--radius);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.newsContent {
+    text-align: center;
+}
+
+.newsIcon {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.newsContent h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.newsContent p {
+    color: var(--muted-foreground);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.newsBtn {
+    background: var(--primary);
+    color: white;
+    padding: 0.9rem 2rem;
+    border-radius: 999px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.newsBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
+}
+
+/* Footer */
+.footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+    color: var(--muted-foreground);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero {
+        min-height: 70vh;
+        padding: 6rem 1.5rem 3rem;
+    }
+
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .ctaGroup {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .services {
+        padding: 4rem 1.5rem;
+    }
+
+    .sectionTitle {
+        font-size: 2rem;
+    }
+
+    .serviceGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .newsCta {
+        margin: 2rem 1rem;
+        padding: 3rem 1.5rem;
+    }
+}

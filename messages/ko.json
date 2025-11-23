@@ -1,0 +1,39 @@
+{
+    "Navbar": {
+        "home": "홈",
+        "services": "서비스",
+        "portfolio": "포트폴리오",
+        "news": "뉴스",
+        "login": "로그인"
+    },
+    "Home": {
+        "heroTitle": "기술로 미래를 건설하세요",
+        "heroSubtitle": "프리미엄 웹 개발 & 테크 뉴스 큐레이션",
+        "getStarted": "시작하기",
+        "viewPortfolio": "포트폴리오 보기",
+        "servicesTitle": "제공 서비스",
+        "newsTitle": "최신 테크 뉴스"
+    },
+    "Services": {
+        "title": "제공 서비스",
+        "webDev": "웹 개발",
+        "webDevDesc": "Next.js로 구축하는 고성능 반응형 웹사이트.",
+        "appDev": "앱 개발",
+        "appDevDesc": "React Native를 이용한 크로스 플랫폼 모바일 앱.",
+        "consulting": "기술 컨설팅",
+        "consultingDesc": "기술 스택 및 아키텍처에 대한 전문가 조언."
+    },
+    "Portfolio": {
+        "title": "포트폴리오",
+        "desc": "최근 진행한 프로젝트를 확인하세요."
+    },
+    "Login": {
+        "title": "환영합니다",
+        "subtitle": "계정에 로그인하세요",
+        "email": "이메일",
+        "password": "비밀번호",
+        "signIn": "로그인",
+        "continueWithGithub": "GitHub로 계속하기",
+        "demoHint": "데모: user@example.com / password 사용"
+    }
+}
