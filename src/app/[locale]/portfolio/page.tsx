@@ -65,6 +65,13 @@ export default function PortfolioPage() {
             tags: ["React", "Next.js", "Stripe", "MongoDB"],
             link: "#",
             github: "#"
+        },
+        {
+            title: "BioTech Platform",
+            desc: "Scalable online education platform with video streaming and quizzes.",
+            tags: ["React", "Next.js", "Stripe", "MongoDB"],
+            link: "#",
+            github: "#"
         }
     ];
 
