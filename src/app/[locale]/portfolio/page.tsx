@@ -53,9 +53,16 @@ export default function PortfolioPage() {
             github: "#"
         },
         {
-            title: "Social Media Dashboard",
-            desc: "Unified analytics for multiple social media platforms",
-            tags: ["Next.js", "GraphQL", "PostgreSQL", "Redis"],
+            title: "AI-Powered Chatbot",
+            desc: "Custom chatbot with NLP capabilities for customer support.",
+            tags: ["Node.js", "TensorFlow", "Dialogflow", "AWS"],
+            link: "#",
+            github: "#"
+        },
+        {
+            title: "E-Learning Platform",
+            desc: "Scalable online education platform with video streaming and quizzes.",
+            tags: ["React", "Next.js", "Stripe", "MongoDB"],
             link: "#",
             github: "#"
         }
