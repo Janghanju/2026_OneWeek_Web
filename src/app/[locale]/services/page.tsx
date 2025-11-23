@@ -3,6 +3,7 @@ import { Navbar } from "@/components/navbar";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { Check, Code, Globe, Smartphone, Zap, Brain, Cloud, Database, Palette, Shield } from "lucide-react";
 import { useTranslations } from 'next-intl';
+import { MotionCard } from "@/components/ui/motion-card";
 
 export default function ServicesPage() {
     const t = useTranslations('Services');
@@ -30,18 +31,20 @@ export default function ServicesPage() {
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
                     {services.map((svc, idx) => (
-                        <div key={idx} style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 'var(--radius)', padding: '2rem', transition: 'transform 0.3s ease, border-color 0.3s ease' }}
-                            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.borderColor = svc.color; }}
-                            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderColor = 'var(--border)'; }}>
-                            {svc.icon}
-                            <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem' }}>{svc.title}</h2>
-                            <p style={{ color: 'var(--muted-foreground)', marginBottom: '2rem', lineHeight: 1.6 }}>{svc.desc}</p>
-                            <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                                {svc.features.map((f, i) => (
-                                    <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Check size={16} color={svc.color} />{f}</li>
-                                ))}
-                            </ul>
-                        </div>
+                        <MotionCard key={idx} index={idx}>
+                            <div style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 'var(--radius)', padding: '2rem', transition: 'transform 0.3s ease, border-color 0.3s ease', height: '100%' }}
+                                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.borderColor = svc.color; }}
+                                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderColor = 'var(--border)'; }}>
+                                {svc.icon}
+                                <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem' }}>{svc.title}</h2>
+                                <p style={{ color: 'var(--muted-foreground)', marginBottom: '2rem', lineHeight: 1.6 }}>{svc.desc}</p>
+                                <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                                    {svc.features.map((f, i) => (
+                                        <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Check size={16} color={svc.color} />{f}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </MotionCard>
                     ))}
                 </div>
             </main>

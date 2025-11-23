@@ -4,9 +4,22 @@ import styles from "./home.module.css";
 import { ArrowRight, Code, Globe, Zap, Newspaper, CheckCircle, Brain, Cloud, GitBranch, Shield, Database } from "lucide-react";
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
+import { MotionCard } from "@/components/ui/motion-card";
 
 export default function Home() {
   const t = useTranslations('Home');
+
+  const services = [
+    { icon: <Globe size={32} className={styles.serviceIcon} />, title: 'Web Development', desc: 'High-performance, responsive websites built with Next.js.' },
+    { icon: <Code size={32} className={styles.serviceIcon} />, title: 'App Development', desc: 'Cross-platform mobile apps using React Native.' },
+    { icon: <CheckCircle size={32} className={styles.serviceIcon} />, title: 'Tech Consulting', desc: 'Expert advice on your tech stack and architecture.' },
+    { icon: <Brain size={32} className={styles.serviceIcon} />, title: 'AI/ML Solutions', desc: 'Intelligent systems powered by machine learning.' },
+    { icon: <Cloud size={32} className={styles.serviceIcon} />, title: 'Cloud Infrastructure', desc: 'Scalable cloud solutions on AWS, Azure, and GCP.' },
+    { icon: <GitBranch size={32} className={styles.serviceIcon} />, title: 'DevOps & CI/CD', desc: 'Automated deployment pipelines and infrastructure.' },
+    { icon: <Shield size={32} className={styles.serviceIcon} />, title: 'Cybersecurity', desc: 'Secure your applications with modern security practices.' },
+    { icon: <Database size={32} className={styles.serviceIcon} />, title: 'Data Engineering', desc: 'Build robust data pipelines and warehouses.' },
+    { icon: <Zap size={32} className={styles.serviceIcon} />, title: 'Blockchain Development', desc: 'Smart contracts and decentralized applications.' },
+  ];
 
   return (
     <div className={styles.container}>
@@ -45,52 +58,15 @@ export default function Home() {
       <section className={styles.services}>
         <h2 className={styles.sectionTitle}>{t('servicesTitle')}</h2>
         <div className={styles.serviceGrid}>
-          <div className={styles.serviceCard}>
-            <Globe size={32} className={styles.serviceIcon} />
-            <h3>Web Development</h3>
-            <p>High-performance, responsive websites built with Next.js.</p>
-          </div>
-          <div className={styles.serviceCard}>
-            <Code size={32} className={styles.serviceIcon} />
-            <h3>App Development</h3>
-            <p>Cross-platform mobile apps using React Native.</p>
-          </div>
-          <div className={styles.serviceCard}>
-            <CheckCircle size={32} className={styles.serviceIcon} />
-            <h3>Tech Consulting</h3>
-            <p>Expert advice on your tech stack and architecture.</p>
-          </div>
-          <div className={styles.serviceCard}>
-            <Brain size={32} className={styles.serviceIcon} />
-            <h3>AI/ML Solutions</h3>
-            <p>Intelligent systems powered by machine learning.</p>
-          </div>
-          <div className={styles.serviceCard}>
-            <Cloud size={32} className={styles.serviceIcon} />
-            <h3>Cloud Infrastructure</h3>
-            <p>Scalable cloud solutions on AWS, Azure, and GCP.</p>
-          </div>
-          <div className={styles.serviceCard}>
-            <GitBranch size={32} className={styles.serviceIcon} />
-            <h3>DevOps & CI/CD</h3>
-            <p>Automated deployment pipelines and infrastructure.</p>
-          </div>
-          {/* New cards */}
-          <div className={styles.serviceCard}>
-            <Shield size={32} className={styles.serviceIcon} />
-            <h3>Cybersecurity</h3>
-            <p>Secure your applications with modern security practices.</p>
-          </div>
-          <div className={styles.serviceCard}>
-            <Database size={32} className={styles.serviceIcon} />
-            <h3>Data Engineering</h3>
-            <p>Build robust data pipelines and warehouses.</p>
-          </div>
-          <div className={styles.serviceCard}>
-            <Zap size={32} className={styles.serviceIcon} />
-            <h3>Blockchain Development</h3>
-            <p>Smart contracts and decentralized applications.</p>
-          </div>
+          {services.map((service, index) => (
+            <MotionCard key={index} index={index}>
+              <div className={styles.serviceCard}>
+                {service.icon}
+                <h3>{service.title}</h3>
+                <p>{service.desc}</p>
+              </div>
+            </MotionCard>
+          ))}
         </div>
       </section>
 

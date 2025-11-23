@@ -5,6 +5,7 @@ import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { useTranslations } from 'next-intl';
 import { ExternalLink, Github } from "lucide-react";
 import Link from "next/link";
+import { MotionCard } from "@/components/ui/motion-card";
 
 export default function PortfolioPage() {
     const t = useTranslations('Portfolio');
@@ -103,65 +104,68 @@ export default function PortfolioPage() {
                     gap: '2rem'
                 }}>
                     {projects.map((project, index) => (
-                        <div key={index} style={{
-                            background: 'var(--card)',
-                            border: '1px solid var(--border)',
-                            borderRadius: 'var(--radius)',
-                            overflow: 'hidden',
-                            transition: 'transform 0.3s ease, border-color 0.3s ease',
-                            display: 'flex',
-                            flexDirection: 'column'
-                        }} onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = 'translateY(-5px)';
-                            e.currentTarget.style.borderColor = 'var(--primary)';
-                        }} onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = 'translateY(0)';
-                            e.currentTarget.style.borderColor = 'var(--border)';
-                        }}>
+                        <MotionCard key={index} index={index}>
                             <div style={{
-                                height: '200px',
-                                background: 'linear-gradient(45deg, #1a1a1a, #2a2a2a)',
+                                background: 'var(--card)',
+                                border: '1px solid var(--border)',
+                                borderRadius: 'var(--radius)',
+                                overflow: 'hidden',
+                                transition: 'transform 0.3s ease, border-color 0.3s ease',
                                 display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                color: '#555'
+                                flexDirection: 'column',
+                                height: '100%'
+                            }} onMouseEnter={(e) => {
+                                e.currentTarget.style.transform = 'translateY(-5px)';
+                                e.currentTarget.style.borderColor = 'var(--primary)';
+                            }} onMouseLeave={(e) => {
+                                e.currentTarget.style.transform = 'translateY(0)';
+                                e.currentTarget.style.borderColor = 'var(--border)';
                             }}>
-                                Project Preview Image
-                            </div>
-                            <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                                <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>{project.title}</h3>
-                                <p style={{ color: 'var(--muted-foreground)', marginBottom: '1.5rem', flex: 1 }}>{project.desc}</p>
+                                <div style={{
+                                    height: '200px',
+                                    background: 'linear-gradient(45deg, #1a1a1a, #2a2a2a)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    color: '#555'
+                                }}>
+                                    Project Preview Image
+                                </div>
+                                <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                                    <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>{project.title}</h3>
+                                    <p style={{ color: 'var(--muted-foreground)', marginBottom: '1.5rem', flex: 1 }}>{project.desc}</p>
 
-                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                                    {project.tags.map(tag => (
-                                        <span key={tag} style={{
-                                            fontSize: '0.8rem',
-                                            padding: '0.2rem 0.6rem',
-                                            background: 'rgba(255,255,255,0.1)',
-                                            borderRadius: '99px',
-                                            color: 'var(--foreground)'
+                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                                        {project.tags.map(tag => (
+                                            <span key={tag} style={{
+                                                fontSize: '0.8rem',
+                                                padding: '0.2rem 0.6rem',
+                                                background: 'rgba(255,255,255,0.1)',
+                                                borderRadius: '99px',
+                                                color: 'var(--foreground)'
+                                            }}>
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    <div style={{ display: 'flex', gap: '1rem' }}>
+                                        <Link href={project.link} style={{
+                                            display: 'flex', alignItems: 'center', gap: '0.5rem',
+                                            color: 'var(--primary)', fontWeight: 600, textDecoration: 'none'
                                         }}>
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
-
-                                <div style={{ display: 'flex', gap: '1rem' }}>
-                                    <Link href={project.link} style={{
-                                        display: 'flex', alignItems: 'center', gap: '0.5rem',
-                                        color: 'var(--primary)', fontWeight: 600, textDecoration: 'none'
-                                    }}>
-                                        <ExternalLink size={16} /> Live Demo
-                                    </Link>
-                                    <Link href={project.github} style={{
-                                        display: 'flex', alignItems: 'center', gap: '0.5rem',
-                                        color: 'var(--muted-foreground)', fontWeight: 600, textDecoration: 'none'
-                                    }}>
-                                        <Github size={16} /> Code
-                                    </Link>
+                                            <ExternalLink size={16} /> Live Demo
+                                        </Link>
+                                        <Link href={project.github} style={{
+                                            display: 'flex', alignItems: 'center', gap: '0.5rem',
+                                            color: 'var(--muted-foreground)', fontWeight: 600, textDecoration: 'none'
+                                        }}>
+                                            <Github size={16} /> Code
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </MotionCard>
                     ))}
                 </div>
             </main>
