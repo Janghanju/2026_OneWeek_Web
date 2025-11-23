@@ -3,7 +3,7 @@
 import { Navbar } from "@/components/navbar";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { useTranslations } from 'next-intl';
-import { Check, Code, Globe, Smartphone, Zap, Brain, Cloud, Database, Palette } from "lucide-react";
+import { Check, Code, Globe, Smartphone, Zap, Brain, Cloud, Database, Palette, Shield } from "lucide-react";
 
 export default function ServicesPage() {
     const t = useTranslations('Services');

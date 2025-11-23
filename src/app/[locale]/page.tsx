@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/navbar";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import styles from "./home.module.css";
-import { ArrowRight, Code, Globe, Zap, Newspaper, CheckCircle, Brain, Cloud, GitBranch } from "lucide-react";
+import { ArrowRight, Code, Globe, Zap, Newspaper, CheckCircle, Brain, Cloud, GitBranch, Shield, Database } from "lucide-react";
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 
@@ -74,6 +74,22 @@ export default function Home() {
             <GitBranch size={32} className={styles.serviceIcon} />
             <h3>DevOps & CI/CD</h3>
             <p>Automated deployment pipelines and infrastructure.</p>
+          </div>
+          {/* New cards */}
+          <div className={styles.serviceCard}>
+            <Shield size={32} className={styles.serviceIcon} />
+            <h3>Cybersecurity</h3>
+            <p>Secure your applications with modern security practices.</p>
+          </div>
+          <div className={styles.serviceCard}>
+            <Database size={32} className={styles.serviceIcon} />
+            <h3>Data Engineering</h3>
+            <p>Build robust data pipelines and warehouses.</p>
+          </div>
+          <div className={styles.serviceCard}>
+            <Zap size={32} className={styles.serviceIcon} />
+            <h3>Blockchain Development</h3>
+            <p>Smart contracts and decentralized applications.</p>
           </div>
         </div>
       </section>
