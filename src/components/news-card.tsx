@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { NewsItem } from '@/lib/crawler';
 import { ExternalLink, MessageSquare, Share2, ThumbsUp, Zap } from 'lucide-react';
@@ -6,18 +8,34 @@ import styles from '@/app/[locale]/news/news.module.css';
 interface NewsCardProps {
     item: NewsItem;
     summary?: string;
+    onTrackClick?: (keyword: string, url: string) => void;
 }
 
-export function NewsCard({ item, summary }: NewsCardProps) {
+export function NewsCard({ item, summary, onTrackClick }: NewsCardProps) {
+    const handleLinkClick = () => {
+        if (onTrackClick) {
+            onTrackClick(item.title, item.link);
+        }
+    };
+
+    const handleShare = async () => {
+        try {
+            await navigator.clipboard.writeText(item.link);
+            alert('링크가 복사되었습니다!');
+        } catch (err) {
+            console.error('Failed to copy:', err);
+        }
+    };
+
     return (
         <div className={styles.card}>
             <div className={styles.cardHeader}>
                 <h3 className={styles.cardTitle}>
-                    <a href={item.link} target="_blank" rel="noopener noreferrer">
+                    <a href={item.link} target="_blank" rel="noopener noreferrer" onClick={handleLinkClick}>
                         {item.title}
                     </a>
                 </h3>
-                <a href={item.link} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--muted-foreground)' }}>
+                <a href={item.link} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--muted-foreground)' }} onClick={handleLinkClick}>
                     <ExternalLink size={18} />
                 </a>
             </div>
@@ -28,7 +46,11 @@ export function NewsCard({ item, summary }: NewsCardProps) {
                         {item.source}
                     </span>
                 )}
-                <span>2분 전</span> {/* Mock time */}
+                {item.timeAgo && (
+                    <span style={{ fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>
+                        {item.timeAgo}
+                    </span>
+                )}
             </div>
 
             {summary ? (
@@ -54,7 +76,7 @@ export function NewsCard({ item, summary }: NewsCardProps) {
                     <MessageSquare size={16} />
                     <span>댓글 0</span>
                 </div>
-                <div className={styles.actionBtn}>
+                <div className={styles.actionBtn} onClick={handleShare}>
                     <Share2 size={16} />
                     <span>공유</span>
                 </div>

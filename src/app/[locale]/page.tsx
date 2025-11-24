@@ -11,15 +11,15 @@ export default function Home() {
   const t = useTranslations('Home');
 
   const services = [
-    { icon: <Globe size={32} className={styles.serviceIcon} />, title: 'Web Development', desc: 'High-performance, responsive websites built with Next.js.' },
-    { icon: <Code size={32} className={styles.serviceIcon} />, title: 'App Development', desc: 'Cross-platform mobile apps using React Native.' },
-    { icon: <CheckCircle size={32} className={styles.serviceIcon} />, title: 'Tech Consulting', desc: 'Expert advice on your tech stack and architecture.' },
-    { icon: <Brain size={32} className={styles.serviceIcon} />, title: 'AI/ML Solutions', desc: 'Intelligent systems powered by machine learning.' },
-    { icon: <Cloud size={32} className={styles.serviceIcon} />, title: 'Cloud Infrastructure', desc: 'Scalable cloud solutions on AWS, Azure, and GCP.' },
-    { icon: <GitBranch size={32} className={styles.serviceIcon} />, title: 'DevOps & CI/CD', desc: 'Automated deployment pipelines and infrastructure.' },
-    { icon: <Shield size={32} className={styles.serviceIcon} />, title: 'Cybersecurity', desc: 'Secure your applications with modern security practices.' },
-    { icon: <Database size={32} className={styles.serviceIcon} />, title: 'Data Engineering', desc: 'Build robust data pipelines and warehouses.' },
-    { icon: <Zap size={32} className={styles.serviceIcon} />, title: 'Blockchain Development', desc: 'Smart contracts and decentralized applications.' },
+    { icon: <Globe size={32} className={styles.serviceIcon} />, title: t('webDevelopment'), desc: t('webDevelopmentDesc') },
+    { icon: <Code size={32} className={styles.serviceIcon} />, title: t('appDevelopment'), desc: t('appDevelopmentDesc') },
+    { icon: <CheckCircle size={32} className={styles.serviceIcon} />, title: t('techConsulting'), desc: t('techConsultingDesc') },
+    { icon: <Brain size={32} className={styles.serviceIcon} />, title: t('aiMlSolutions'), desc: t('aiMlSolutionsDesc') },
+    { icon: <Cloud size={32} className={styles.serviceIcon} />, title: t('cloudInfrastructure'), desc: t('cloudInfrastructureDesc') },
+    { icon: <GitBranch size={32} className={styles.serviceIcon} />, title: t('devOpsCiCd'), desc: t('devOpsCiCdDesc') },
+    { icon: <Shield size={32} className={styles.serviceIcon} />, title: t('cybersecurity'), desc: t('cybersecurityDesc') },
+    { icon: <Database size={32} className={styles.serviceIcon} />, title: t('dataEngineering'), desc: t('dataEngineeringDesc') },
+    { icon: <Zap size={32} className={styles.serviceIcon} />, title: t('blockchainDevelopment'), desc: t('blockchainDevelopmentDesc') },
   ];
 
   return (
@@ -32,7 +32,7 @@ export default function Home() {
         <div className={styles.heroContent}>
           <div className={styles.badge}>
             <Zap size={16} className={styles.badgeIcon} />
-            <span>Available for new projects</span>
+            <span>{t('availableForProjects')}</span>
           </div>
           <h1 className={styles.title}>
             {t('heroTitle')}
@@ -76,15 +76,15 @@ export default function Home() {
         <div className={styles.newsContent}>
           <Newspaper size={48} className={styles.newsIcon} />
           <h2>{t('newsTitle')}</h2>
-          <p>Stay updated with the latest trends in development and startups.</p>
+          <p>{t('stayUpdated')}</p>
           <Link href="/news" className={styles.newsBtn}>
-            Read News
+            {t('readNews')}
           </Link>
         </div>
       </section>
 
       <footer className={styles.footer}>
-        <p>© 2026 One Week. All rights reserved.</p>
+        <p>© 2026 One Week. {t('allRightsReserved')}.</p>
       </footer>
     </div>
   );

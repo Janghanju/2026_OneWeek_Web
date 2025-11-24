@@ -1,27 +1,56 @@
 'use client';
 
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Github, Mail, Lock, Loader2 } from 'lucide-react';
-import styles from './login.module.css';
+import { signIn } from 'next-auth/react';
+import { Mail, Lock, User, Loader2 } from 'lucide-react';
+import styles from '../login/login.module.css';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 
-export default function LoginPage() {
+export default function RegisterPage() {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const router = useRouter();
-    const t = useTranslations('Login');
+    const t = useTranslations('Register');
 
-    const handleCredentialsLogin = async (e: React.FormEvent) => {
+    const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
         setError('');
 
+        if (password !== confirmPassword) {
+            setError(t('passwordMismatch'));
+            setIsLoading(false);
+            return;
+        }
+
+        if (password.length < 6) {
+            setError(t('passwordTooShort'));
+            setIsLoading(false);
+            return;
+        }
+
         try {
+            const res = await fetch('/api/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, password })
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                setError(data.error || 'Registration failed');
+                setIsLoading(false);
+                return;
+            }
+
+            // Auto login after successful registration
             const result = await signIn('credentials', {
                 email,
                 password,
@@ -29,7 +58,8 @@ export default function LoginPage() {
             });
 
             if (result?.error) {
-                setError(t('invalidCredentials'));
+                setError(t('registrationFailed'));
+                setTimeout(() => router.push('/login'), 2000);
             } else {
                 router.push('/');
             }
@@ -38,14 +68,6 @@ export default function LoginPage() {
         } finally {
             setIsLoading(false);
         }
-    };
-
-    const handleGithubLogin = () => {
-        signIn('github', { callbackUrl: '/' });
-    };
-
-    const handleGoogleLogin = () => {
-        signIn('google', { callbackUrl: '/' });
     };
 
     return (
@@ -65,7 +87,22 @@ export default function LoginPage() {
                     </div>
                 )}
 
-                <form onSubmit={handleCredentialsLogin} className={styles.form}>
+                <form onSubmit={handleRegister} className={styles.form}>
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="name" className={styles.label}>
+                            <User size={18} />
+                            {t('name')}
+                        </label>
+                        <input
+                            id="name"
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder={t('yourName')}
+                            className={styles.input}
+                        />
+                    </div>
+
                     <div className={styles.inputGroup}>
                         <label htmlFor="email" className={styles.label}>
                             <Mail size={18} />
@@ -95,6 +132,24 @@ export default function LoginPage() {
                             placeholder="••••••••"
                             className={styles.input}
                             required
+                            minLength={6}
+                        />
+                    </div>
+
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="confirmPassword" className={styles.label}>
+                            <Lock size={18} />
+                            {t('confirmPassword')}
+                        </label>
+                        <input
+                            id="confirmPassword"
+                            type="password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            placeholder="••••••••"
+                            className={styles.input}
+                            required
+                            minLength={6}
                         />
                     </div>
 
@@ -106,40 +161,16 @@ export default function LoginPage() {
                         {isLoading ? (
                             <>
                                 <Loader2 size={20} className={styles.spinner} />
-                                {t('signingIn')}
+                                {t('creatingAccount')}
                             </>
                         ) : (
-                            t('signIn')
+                            t('signUp')
                         )}
                     </button>
                 </form>
 
-                <div className={styles.divider}>
-                    <span>{t('or')}</span>
-                </div>
-
-                <button
-                    onClick={handleGithubLogin}
-                    className={styles.githubBtn}
-                >
-                    <Github size={20} />
-                    {t('continueWithGithub')}
-                </button>
-
-                <button
-                    onClick={handleGoogleLogin}
-                    className={styles.googleBtn}
-                >
-                    <Mail size={20} />
-                    {t('continueWithGoogle')}
-                </button>
-
-                <p className={styles.demoHint}>
-                    💡 {t('demoHint')}: <code>user@example.com</code> / <code>password</code>
-                </p>
-
                 <p className={styles.demoHint} style={{ marginTop: '1rem', textAlign: 'center' }}>
-                    {t('noAccount')} <Link href="/register" style={{ color: 'var(--primary)', textDecoration: 'underline' }}>{t('signUp')}</Link>
+                    {t('haveAccount')} <Link href="/login" style={{ color: 'var(--primary)', textDecoration: 'underline' }}>{t('signIn')}</Link>
                 </p>
             </div>
         </div>

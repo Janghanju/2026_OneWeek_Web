@@ -11,8 +11,7 @@ export const MotionContainer = ({ children, className = "", delay = 0, ...props 
     return (
         <motion.div
             initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            animate="visible"
             variants={{
                 hidden: { opacity: 0 },
                 visible: {

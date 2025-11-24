@@ -1,99 +1,116 @@
 .container {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 6rem 2rem 2rem;
     display: grid;
-    grid-template-columns: 280px 1fr 320px;
+    grid-template-columns: 300px 1fr;
     gap: 2rem;
-    min-height: 100vh;
 }
 
-.header {
-    grid-column: 1 / -1;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.sidebar {
+    position: sticky;
+    top: 6rem;
+    height: fit-content;
 }
 
 .title {
     font-size: 2rem;
     font-weight: 800;
+    margin-bottom: 0.5rem;
     background: linear-gradient(to right, var(--primary), var(--accent));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .subtitle {
     color: var(--muted-foreground);
-    font-size: 0.9rem;
+    margin-bottom: 2rem;
 }
 
-/* Sidebar Navigation */
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.navItem {
-    padding: 0.75rem 1rem;
+.trendingBox {
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: var(--radius);
-    color: var(--muted-foreground);
-    font-weight: 500;
-    transition: all 0.2s ease;
-    cursor: pointer;
+    padding: 1.5rem;
+}
+
+.trendingHeader {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-}
-
-.navItem:hover,
-.navItem.active {
-    background: var(--secondary);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
     color: var(--foreground);
 }
 
-/* Feed Area */
+.trendingItem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+}
+
+.trendingItem:last-child {
+    border-bottom: none;
+}
+
+.trendingRank {
+    font-weight: 700;
+    color: var(--primary);
+    width: 20px;
+}
+
+.trendingKeyword {
+    flex: 1;
+    color: var(--foreground);
+}
+
+.main {
+    min-width: 0;
+    /* Prevent overflow */
+}
+
 .feed {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
 
-/* News Card */
 .card {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 1.5rem;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
 }
 
 .card:hover {
     transform: translateY(-2px);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
     border-color: var(--primary);
-    box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
 }
 
 .cardHeader {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
 .cardTitle {
     font-size: 1.25rem;
     font-weight: 700;
     line-height: 1.4;
+    margin: 0;
+}
+
+.cardTitle a {
     color: var(--foreground);
-    margin-right: 1rem;
+    text-decoration: none;
+    transition: color 0.2s;
 }
 
 .cardTitle a:hover {
@@ -103,36 +120,33 @@
 .cardMeta {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    font-size: 0.8rem;
-    color: var(--muted-foreground);
+    gap: 0.75rem;
     margin-bottom: 1rem;
 }
 
 .sourceTag {
-    background: var(--secondary);
-    padding: 0.2rem 0.6rem;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    background: rgba(var(--primary-rgb), 0.1);
+    color: var(--primary);
     border-radius: 999px;
     font-weight: 600;
-    color: var(--accent);
 }
 
 .summary {
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--muted);
     padding: 1rem;
-    border-radius: calc(var(--radius) - 4px);
+    border-radius: var(--radius);
     font-size: 0.9rem;
     line-height: 1.6;
-    color: var(--foreground);
-    margin-top: 1rem;
-    border-left: 3px solid var(--accent);
+    color: var(--muted-foreground);
+    margin-bottom: 1rem;
 }
 
 .cardFooter {
-    margin-top: 1.2rem;
     display: flex;
     gap: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--border);
     padding-top: 1rem;
 }
 
@@ -147,51 +161,50 @@
 }
 
 .actionBtn:hover {
-    color: var(--primary);
+    color: var(--foreground);
 }
 
-/* Trending Section */
-.trending {
-    background: var(--secondary);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    height: fit-content;
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.pageBtn {
+    padding: 0.5rem;
     border: 1px solid var(--border);
-}
-
-.trendingTitle {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
+    background: var(--card);
+    border-radius: var(--radius);
+    cursor: pointer;
+    color: var(--foreground);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
 }
 
-.trendingItem {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    font-size: 0.9rem;
+.pageBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
-.trendingItem:last-child {
-    border-bottom: none;
+.pageInfo {
+    font-weight: 600;
+    color: var(--foreground);
 }
 
-.trendingRank {
-    color: var(--primary);
-    font-weight: 800;
-    margin-right: 0.5rem;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
     .container {
         grid-template-columns: 1fr;
+        padding-top: 5rem;
     }
 
-    .sidebar,
-    .trending {
-        display: none;
+    .sidebar {
+        position: static;
+        height: auto;
+        order: -1;
+        /* Show sidebar (hot topics) on top on mobile? Or bottom? Let's keep it top or maybe hide? */
+        /* Usually hot topics are good on top */
     }
 }

@@ -18,3 +18,40 @@ model News {
   url       String   @unique
   createdAt DateTime @default(now())
 }
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String?
+  emailVerified DateTime?
+  image         String?
+  role          Role      @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  inquiries     Inquiry[]
+}
+
+model Inquiry {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  answer    String?
+  isPrivate Boolean  @default(true)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ClickLog {
+  id        Int      @id @default(autoincrement())
+  keyword   String
+  url       String
+  createdAt DateTime @default(now())
+}

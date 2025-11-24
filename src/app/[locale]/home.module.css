@@ -225,8 +225,9 @@
 
 .serviceGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
+    align-items: start;
 }
 
 .serviceCard {
@@ -236,6 +237,9 @@
     border-radius: var(--radius);
     transition: all 0.3s;
     text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .serviceCard:hover {
@@ -258,53 +262,91 @@
 .serviceCard p {
     color: var(--muted-foreground);
     line-height: 1.6;
+    flex-grow: 1;
 }
 
 /* News CTA Section */
 .newsCta {
-    padding: 4rem 2rem;
+    padding: 5rem 2rem;
     margin: 4rem auto;
-    max-width: 900px;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
-    border-radius: var(--radius);
-    border: 1px solid rgba(59, 130, 246, 0.2);
+    max-width: 1000px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15));
+    border-radius: 20px;
+    border: 2px solid rgba(59, 130, 246, 0.3);
+    box-shadow: 0 20px 60px -15px rgba(59, 130, 246, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.newsCta::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .newsContent {
     text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
 .newsIcon {
     color: var(--primary);
     margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
 }
 
 .newsContent h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
+    background: linear-gradient(to right, var(--foreground), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .newsContent p {
     color: var(--muted-foreground);
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    font-size: 1.15rem;
+    line-height: 1.8;
 }
 
 .newsBtn {
     background: var(--primary);
     color: white;
-    padding: 0.9rem 2rem;
+    padding: 1.1rem 2.5rem;
     border-radius: 999px;
     font-weight: 600;
+    font-size: 1.05rem;
     transition: all 0.3s;
     text-decoration: none;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
 }
 
 .newsBtn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px -5px rgba(59, 130, 246, 0.6);
+    background: rgba(59, 130, 246, 0.9);
 }
 
 /* Footer */
@@ -316,6 +358,12 @@
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+    .serviceGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
     .hero {
         min-height: 70vh;
@@ -351,3 +399,8 @@
         margin: 2rem 1rem;
         padding: 3rem 1.5rem;
     }
+
+    .newsContent h2 {
+        font-size: 2rem;
+    }
+}
