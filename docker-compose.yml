@@ -9,6 +9,20 @@ services:
       - "3000"
     environment:
       - DATABASE_URL=postgresql://myuser:mypassword@db:5432/mydb?schema=public
+      - BACKEND_URL=http://backend:3001
+    depends_on:
+      - db
+      - backend
+
+  backend:
+    container_name: oneweek-backend
+    build: ./backend
+    restart: always
+    expose:
+      - "3001"
+    environment:
+      - DATABASE_URL=postgresql://myuser:mypassword@db:5432/mydb?schema=public
+      - PORT=3001
     depends_on:
       - db
 
