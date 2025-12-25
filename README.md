@@ -1,6 +1,13 @@
 # One Week - Jang Hanju Portfolio & Tech News
 # One Week - 장한주 포트폴리오 & 기술 뉴스
 
+> **🚀 Deployment Guide / 배포 가이드**
+>
+> 상세한 배포 방법과 보안 설정은 [DEPLOY_GUIDE.md](./DEPLOY_GUIDE.md) 파일을 참고하세요.
+>
+> For detailed deployment instructions and security setup, please refer to [DEPLOY_GUIDE.md](./DEPLOY_GUIDE.md).
+
+
 > **English**: A premium portfolio and IT news platform built with Next.js 14+ (App Router).
 > 
 > **한국어**: Next.js 14+ (App Router)를 기반으로 구축된 프리미엄 포트폴리오 및 IT 뉴스 플랫폼입니다.
