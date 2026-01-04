@@ -11,11 +11,13 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
 RUN npm run build
+RUN ls -la /app/dist
 
 FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV production
 
+RUN apk add --no-cache openssl
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nestjs
 
@@ -28,4 +30,4 @@ USER nestjs
 
 EXPOSE 3001
 
-CMD ["node", "dist/main"]
+CMD ["node", "dist/src/main"]

@@ -41,19 +41,7 @@ export default function About() {
             <main className={styles.main}>
                 <MotionContainer>
                     <div className={styles.header}>
-                        <div style={{
-                            width: '80px',
-                            height: '80px',
-                            background: 'linear-gradient(135deg, #10b981 0%, #3b82f6 100%)',
-                            borderRadius: '24px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            marginBottom: '1.5rem',
-                            boxShadow: '0 10px 25px rgba(16, 185, 129, 0.3)'
-                        }}>
-                            <User size={40} color="white" />
-                        </div>
+
                         <h1 className={styles.title}>{t('title')}</h1>
                         <p className={styles.subtitle}>{t('subtitle')}</p>
                     </div>

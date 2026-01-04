@@ -84,19 +84,7 @@ export default function PortfolioPage() {
 
             <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '8rem 2rem 4rem', position: 'relative', zIndex: 1 }}>
                 <div style={{ textAlign: 'center', marginBottom: '4rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <div style={{
-                        width: '80px',
-                        height: '80px',
-                        background: 'linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)',
-                        borderRadius: '24px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginBottom: '1.5rem',
-                        boxShadow: '0 10px 25px rgba(236, 72, 153, 0.3)'
-                    }}>
-                        <Briefcase size={40} color="white" />
-                    </div>
+
                     <h1 style={{
                         fontSize: '3rem',
                         fontWeight: 800,

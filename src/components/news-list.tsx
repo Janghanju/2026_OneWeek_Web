@@ -176,11 +176,7 @@ export default function NewsList() {
                     >
                         →
                     </button>
-                    {page >= totalPages && (
-                        <span style={{ marginLeft: '1rem', color: 'var(--muted-foreground)', fontSize: '0.9rem' }}>
-                            Last Page
-                        </span>
-                    )}
+
                 </div>
             )}
         </div>

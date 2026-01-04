@@ -14,6 +14,6 @@ async function bootstrap() {
   });
   app.useGlobalPipes(new ValidationPipe());
 
-  await app.listen(3001); // Backend port
+  await app.listen(3001, '0.0.0.0'); // Backend port
 }
 bootstrap();

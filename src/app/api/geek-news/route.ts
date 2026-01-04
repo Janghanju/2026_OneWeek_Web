@@ -6,7 +6,8 @@ export async function GET(request: Request) {
 
     try {
         // Proxy to NestJS Backend
-        const res = await fetch(`http://127.0.0.1:3001/geek-news?page=${page}`, {
+        const backendUrl = process.env.BACKEND_URL || 'http://127.0.0.1:3001';
+        const res = await fetch(`${backendUrl}/geek-news?page=${page}`, {
             cache: 'no-store'
         });
 
