@@ -39,7 +39,7 @@ export class GeekNewsService implements OnModuleInit {
                 const source = $(el).find('.topicinfo').text().split(' ')[0] || 'GeekNews';
 
                 if (title && url) {
-                    const fullUrl = url.startsWith('http') ? url : `https://news.hada.io${url}`;
+                    const fullUrl = url.startsWith('http') ? url : `https://news.hada.io${url.startsWith('/') ? '' : '/'}${url}`;
                     items.push({ title, url: fullUrl, summary, source });
                 }
             });
