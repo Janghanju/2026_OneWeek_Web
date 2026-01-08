@@ -15,7 +15,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 if (!credentials?.email || !credentials?.password) return null;
 
                 try {
-                    const res = await fetch('http://localhost:3000/api/nest/auth/login', {
+                    const backendUrl = process.env.BACKEND_URL || 'http://localhost:3001';
+                    const res = await fetch(`${backendUrl}/auth/login`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
