@@ -100,7 +100,96 @@ Nginx를 설정하여 3000번(프론트)과 3001번(백엔드) 포트로 요청�
 
 ---
 
-## 💻 Local Development / 로컬 개발
+## 🔒 HTTPS Setup Guide (SSL) / HTTPS 설정 가이드 (SSL)
+
+To enable HTTPS with a free Let's Encrypt certificate, follow these steps on your server.
+무료 Let's Encrypt 인증서를 사용하여 HTTPS를 적용하려면 서버에서 다음 단계를 따르세요.
+
+### 1. Configure Nginx for HTTP (Temporary) / Nginx 임시 설정 (HTTP)
+
+First, we need to start Nginx in HTTP mode to allow Certbot to verify your domain.
+먼저 Certbot이 도메인을 확인할 수 있도록 Nginx를 HTTP 모드로 실행해야 합니다.
+
+Edit `nginx/conf.d/app.conf`:
+`nginx/conf.d/app.conf` 파일을 수정하세요:
+
+```nginx
+upstream frontend {
+    server oneweek-web:3000;
+}
+
+upstream backend {
+    server oneweek-backend:3001;
+}
+
+server {
+    listen 80;
+    server_name YOUR_DOMAIN.com; # 👈 Change this to your domain (도메인 변경 필수)
+
+    # Certbot verification path
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    # Frontend proxy
+    location / {
+        proxy_pass http://frontend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    # Backend proxy
+    location /api {
+        proxy_pass http://backend;
+        proxy_set_header Host $host;
+    }
+}
+```
+
+### 2. Start Nginx / Nginx 실행
+
+```bash
+# Remove existing container if any / 기존 컨테이너 삭제
+sudo docker rm -f oneweek-nginx
+
+# Run Nginx / Nginx 실행
+sudo docker-compose up -d nginx
+```
+
+### 3. Issue Certificate / 인증서 발급
+
+Run Certbot to get the certificate. Replace `YOUR_DOMAIN.com` with your actual domain.
+Certbot을 실행하여 인증서를 발급받습니다. `YOUR_DOMAIN.com`을 실제 도메인으로 변경하세요.
+
+```bash
+sudo docker run --rm -it \
+  -v $(pwd)/nginx/certbot/conf:/etc/letsencrypt \
+  -v $(pwd)/nginx/certbot/www:/var/www/certbot \
+  certbot/certbot certonly --webroot \
+  --webroot-path=/var/www/certbot \
+  -d YOUR_DOMAIN.com
+```
+
+If successful, you will see a "Congratulations!" message.
+성공하면 "Congratulations!" 메시지가 표시됩니다.
+
+### 4. Enable HTTPS / HTTPS 활성화
+
+Now that you have the certificate, update `nginx/conf.d/app.conf` to enable HTTPS.
+인증서가 발급되었으므로 `nginx/conf.d/app.conf`를 수정하여 HTTPS를 활성화합니다.
+
+(Uncomment the HTTPS section in the file or add the SSL configuration pointing to your new certificates.)
+(파일 내의 HTTPS 섹션 주석을 해제하거나 새로운 인증서 경로로 SSL 설정을 추가하세요.)
+
+Then restart Nginx:
+그 후 Nginx를 재시작합니다:
+
+```bash
+sudo docker-compose restart nginx
+```
+
+---
 
 Run the development server to view the website locally without Docker.
 도커 없이 로컬에서 개발 서버를 실행하는 방법입니다.
