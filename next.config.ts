@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/nest/:path*',
+        source: '/api/:path*',
         destination: `${process.env.BACKEND_URL || 'http://backend:3001'}/:path*`,
       },
     ];
