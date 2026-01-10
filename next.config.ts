@@ -8,7 +8,11 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
+        source: '/api/auth/register',
+        destination: `${process.env.BACKEND_URL || 'http://backend:3001'}/auth/register`,
+      },
+      {
+        source: '/api/:path((?!auth).*)',
         destination: `${process.env.BACKEND_URL || 'http://backend:3001'}/:path*`,
       },
     ];
