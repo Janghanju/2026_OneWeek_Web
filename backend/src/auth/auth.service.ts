@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
@@ -45,6 +45,9 @@ export class AuthService {
             return this.login(user);
         } catch (error) {
             console.error('Registration failed:', error);
+            if (error.code === 'P2002') {
+                throw new ConflictException('Email already exists');
+            }
             throw error;
         }
     }
