@@ -1,3 +1,5 @@
+"use client";
+
 import { Navbar } from "@/components/navbar";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import styles from "./home.module.css";
@@ -51,8 +53,10 @@ export default function Home() {
           </div>
         </div>
         <div className={styles.heroVisual}>
+          <div className={styles.glow} />
+          <div className={styles.grid} />
           <div className={styles.splineWrapper}>
-            <Spline scene="https://prod.spline.design/CeSkkuIdioZujE07/scene.splinecode" />
+            <Spline scene="https://prod.spline.design/4I4wQYzT2e23xPiF/scene.splinecode" />
           </div>
         </div>
       </section>

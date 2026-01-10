@@ -452,3 +452,4 @@
         font-size: 2rem;
     }
 }
+.splineWrapper { pointer-events: auto !important; }
