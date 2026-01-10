@@ -13,6 +13,8 @@
     "@mantine/core": "^8.3.9",
     "@mantine/hooks": "^8.3.9",
     "@prisma/client": "^5.22.0",
+    "@splinetool/react-spline": "^4.1.0",
+    "@splinetool/runtime": "^1.12.32",
     "bcryptjs": "^3.0.3",
     "cheerio": "^1.1.2",
     "clsx": "^2.1.1",

@@ -6,6 +6,7 @@ import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { MotionCard } from "@/components/ui/motion-card";
 import { MotionContainer } from "@/components/ui/motion-container";
+import Spline from '@splinetool/react-spline/next';
 
 export default function Home() {
   const t = useTranslations('Home');
@@ -50,8 +51,9 @@ export default function Home() {
           </div>
         </div>
         <div className={styles.heroVisual}>
-          <div className={styles.glow} />
-          <div className={styles.grid} />
+          <div className={styles.splineWrapper}>
+            <Spline scene="https://prod.spline.design/CeSkkuIdioZujE07/scene.splinecode" />
+          </div>
         </div>
       </section>
 
