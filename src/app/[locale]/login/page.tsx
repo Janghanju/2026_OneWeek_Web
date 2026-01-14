@@ -2,10 +2,9 @@
 
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import { Github, Mail, Lock, Loader2 } from 'lucide-react';
 import styles from './login.module.css';
-import { Link } from '@/i18n/routing';
+import { Link, useRouter } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 
 export default function LoginPage() {

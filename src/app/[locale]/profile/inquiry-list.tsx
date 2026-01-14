@@ -10,7 +10,7 @@ interface Inquiry {
     content: string;
     answer?: string | null;
     createdAt: Date;
-    isSecret?: boolean;
+    isPrivate?: boolean;
     user?: {
         name?: string | null;
         email?: string | null;
@@ -71,7 +71,7 @@ export function InquiryList({ inquiries: initialInquiries, isAdmin = false }: In
                         <div style={{ flex: 1 }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                 <h4 className={styles.inquiryTitle}>{inquiry.title}</h4>
-                                {inquiry.isSecret && <Lock size={14} color="var(--muted-foreground)" />}
+                                {inquiry.isPrivate && <Lock size={14} color="var(--muted-foreground)" />}
                             </div>
                             <div style={{ display: 'flex', gap: '1rem', fontSize: '0.8rem', color: 'var(--muted-foreground)', marginTop: '0.2rem' }}>
                                 <span className={styles.inquiryDate}>

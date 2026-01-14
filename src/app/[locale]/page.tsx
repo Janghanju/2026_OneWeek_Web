@@ -1,17 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { Navbar } from "@/components/navbar";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import styles from "./home.module.css";
-import { ArrowRight, Code, Globe, Zap, Newspaper, CheckCircle, Brain, Cloud, GitBranch, Shield, Database } from "lucide-react";
+import { ArrowRight, Code, Globe, Zap, Newspaper, CheckCircle, Brain, Cloud, GitBranch, Shield, Database, Loader2 } from "lucide-react";
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
-import { MotionCard } from "@/components/ui/motion-card";
-import { MotionContainer } from "@/components/ui/motion-container";
-import Spline from '@splinetool/react-spline/next';
+import Spline from '@splinetool/react-spline';
 
 export default function Home() {
   const t = useTranslations('Home');
+  const [isSplineLoaded, setIsSplineLoaded] = useState(false);
 
   const services = [
     { icon: <Globe size={32} className={styles.serviceIcon} />, title: t('webDevelopment'), desc: t('webDevelopmentDesc') },
@@ -56,7 +56,15 @@ export default function Home() {
           <div className={styles.glow} />
           <div className={styles.grid} />
           <div className={styles.splineWrapper}>
-            <Spline scene="https://prod.spline.design/4I4wQYzT2e23xPiF/scene.splinecode" />
+            {!isSplineLoaded && (
+              <div className={styles.splineLoader}>
+                <Loader2 className={styles.spinner} size={48} />
+              </div>
+            )}
+            <Spline
+              scene="https://prod.spline.design/4I4wQYzT2e23xPiF/scene.splinecode"
+              onLoad={() => setIsSplineLoaded(true)}
+            />
           </div>
         </div>
       </section>
@@ -64,17 +72,15 @@ export default function Home() {
       {/* Services Preview */}
       <section className={styles.services}>
         <h2 className={styles.sectionTitle}>{t('servicesTitle')}</h2>
-        <MotionContainer className={styles.serviceGrid}>
+        <div className={styles.serviceGrid}>
           {services.map((service, index) => (
-            <MotionCard key={index}>
-              <div className={styles.serviceCard}>
-                {service.icon}
-                <h3>{service.title}</h3>
-                <p>{service.desc}</p>
-              </div>
-            </MotionCard>
+            <div key={index} className={styles.serviceCard}>
+              {service.icon}
+              <h3>{service.title}</h3>
+              <p>{service.desc}</p>
+            </div>
           ))}
-        </MotionContainer>
+        </div>
       </section>
 
       {/* News CTA */}

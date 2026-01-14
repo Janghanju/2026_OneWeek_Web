@@ -11,7 +11,8 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - BACKEND_URL=http://backend:3001
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
-      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      - NEXTAUTH_URL=http://localhost:8881
+      - AUTH_TRUST_HOST=true
     depends_on:
       - backend
       - db
@@ -44,8 +45,8 @@ services:
     image: nginx:1.25-alpine
     restart: always
     ports:
-      - "8080:80"
-      - "8443:443"
+      - "8881:80"
+      - "8843:443"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./certbot/conf:/etc/letsencrypt

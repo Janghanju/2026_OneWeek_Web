@@ -1,11 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { Mail, Lock, User, Loader2 } from 'lucide-react';
 import styles from '../login/login.module.css';
-import { Link } from '@/i18n/routing';
+import { Link, useRouter } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 
 export default function RegisterPage() {
@@ -36,7 +35,7 @@ export default function RegisterPage() {
         }
 
         try {
-            const res = await fetch('/api/auth/register', {
+            const res = await fetch('/api/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email, password })

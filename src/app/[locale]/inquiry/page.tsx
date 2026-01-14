@@ -18,7 +18,7 @@ export default function InquiryPage() {
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [isSecret, setIsSecret] = useState(false);
+    const [isPrivate, setIsPrivate] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
@@ -38,7 +38,7 @@ export default function InquiryPage() {
             const res = await fetch('/api/inquiry', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title, content, isSecret }),
+                body: JSON.stringify({ title, content, isPrivate }),
             });
 
             if (!res.ok) throw new Error('Failed to submit inquiry');
@@ -105,13 +105,13 @@ export default function InquiryPage() {
                                 <div className={styles.checkboxGroup}>
                                     <input
                                         type="checkbox"
-                                        id="secret"
-                                        checked={isSecret}
-                                        onChange={(e) => setIsSecret(e.target.checked)}
+                                        id="private"
+                                        checked={isPrivate}
+                                        onChange={(e) => setIsPrivate(e.target.checked)}
                                         style={{ width: '20px', height: '20px' }}
                                     />
-                                    <label htmlFor="secret" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                        <Lock size={16} /> Secret Inquiry (Only visible to admins)
+                                    <label htmlFor="private" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                        <Lock size={16} /> Private Inquiry (Only visible to admins)
                                     </label>
                                 </div>
 
