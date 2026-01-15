@@ -40,7 +40,7 @@ export async function crawlHadaIo(page: number = 1): Promise<NewsItem[]> {
             const timeAgo = timeMatch ? timeMatch[0] : '';
 
             // The link might be relative '/topic?id=...' or absolute.
-            const fullLink = link?.startsWith('http') ? link : `https://news.hada.io${link}`;
+            const fullLink = link?.startsWith('http') ? link : `https://news.hada.io/${link?.replace(/^\//, '')}`;
 
             if (title && fullLink) {
                 newsItems.push({

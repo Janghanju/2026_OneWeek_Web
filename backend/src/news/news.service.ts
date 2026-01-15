@@ -49,7 +49,7 @@ export class NewsService {
 
                 const fullLink = link?.startsWith('http')
                     ? link
-                    : `https://news.hada.io${link}`;
+                    : `https://news.hada.io/${link?.replace(/^\//, '')}`;
 
                 if (title && fullLink) {
                     newsItems.push({
