@@ -44,7 +44,10 @@ export async function GET(request: Request) {
                 createdAt: p.createdAt,
                 commentCount: p._count.comments
             })),
-            ...crawledNews
+            ...crawledNews.map(n => ({
+                ...n,
+                url: n.link
+            }))
         ];
 
         return NextResponse.json({ news: combinedNews });
