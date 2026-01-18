@@ -273,13 +273,13 @@ export default function NewsList() {
         }
     };
 
-    const handlePostComment = async (newsId: string | number, parentId: string | null = null) => {
+    const handlePostComment = async (newsId: string | number, parentId: string | null = null, title?: string) => {
         if (!newComment.trim()) return;
         try {
             const res = await fetch('/api/comments', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ newsId, content: newComment, parentId }),
+                body: JSON.stringify({ newsId, content: newComment, parentId, title }),
             });
             if (res.ok) {
                 setNewComment('');
@@ -468,7 +468,7 @@ export default function NewsList() {
                                                             />
                                                             <button
                                                                 className={styles.submitBtn}
-                                                                onClick={() => handlePostComment(item.id)}
+                                                                onClick={() => handlePostComment(item.id, null, item.title)}
                                                                 style={{ padding: '0.5rem 1rem' }}
                                                             >
                                                                 <Send size={16} />
