@@ -63,7 +63,7 @@ export default function Contact() {
                                     <p>
                                         {t('inquiryDescription')}<br />
                                     </p>
-                                    <Link href="/inquiry" className={styles.inquiryBtn}>
+                                    <Link href={`/inquiry`} className={styles.inquiryBtn}>
                                         {t('goToInquiry')}
                                     </Link>
                                 </div>
