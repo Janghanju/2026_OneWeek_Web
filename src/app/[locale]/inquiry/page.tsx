@@ -13,8 +13,7 @@ import { useTranslations } from 'next-intl';
 export default function InquiryPage() {
     const { data: session, status } = useSession();
     const router = useRouter();
-    const t = useTranslations('Contact'); // Reusing Contact translations or add new ones? Let's assume Contact has some generic ones or use hardcoded for now if missing.
-    // Actually, I should add Inquiry specific translations later. For now I'll use English/Korean hardcoded or generic keys.
+    const t = useTranslations('Inquiry');
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -46,7 +45,7 @@ export default function InquiryPage() {
             setSuccess(true);
             setTimeout(() => router.push('/profile'), 2000);
         } catch (err) {
-            setError('Failed to submit inquiry. Please try again.');
+            setError(t('error'));
         } finally {
             setLoading(false);
         }
@@ -60,16 +59,16 @@ export default function InquiryPage() {
             <main className={styles.container}>
                 <MotionContainer>
                     <div className={styles.header}>
-                        <h1 className={styles.title}>1:1 Inquiry</h1>
-                        <p className={styles.subtitle}>We will get back to you as soon as possible.</p>
+                        <h1 className={styles.title}>{t('title')}</h1>
+                        <p className={styles.subtitle}>{t('subtitle')}</p>
                     </div>
 
                     <div className={styles.formCard}>
                         {success ? (
                             <div style={{ textAlign: 'center', padding: '3rem' }}>
                                 <CheckCircle size={64} color="var(--primary)" style={{ marginBottom: '1rem' }} />
-                                <h2>Inquiry Submitted!</h2>
-                                <p>Redirecting to your profile...</p>
+                                <h2>{t('successTitle')}</h2>
+                                <p>{t('successSubtitle')}</p>
                             </div>
                         ) : (
                             <form onSubmit={handleSubmit}>
@@ -80,25 +79,25 @@ export default function InquiryPage() {
                                 )}
 
                                 <div className={styles.formGroup}>
-                                    <label className={styles.label}>Title</label>
+                                    <label className={styles.label}>{t('titleLabel')}</label>
                                     <input
                                         type="text"
                                         className={styles.input}
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
                                         required
-                                        placeholder="What is your inquiry about?"
+                                        placeholder={t('titlePlaceholder')}
                                     />
                                 </div>
 
                                 <div className={styles.formGroup}>
-                                    <label className={styles.label}>Content</label>
+                                    <label className={styles.label}>{t('contentLabel')}</label>
                                     <textarea
                                         className={styles.textarea}
                                         value={content}
                                         onChange={(e) => setContent(e.target.value)}
                                         required
-                                        placeholder="Please describe your issue in detail."
+                                        placeholder={t('contentPlaceholder')}
                                     />
                                 </div>
 
@@ -111,14 +110,14 @@ export default function InquiryPage() {
                                         style={{ width: '20px', height: '20px' }}
                                     />
                                     <label htmlFor="private" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                        <Lock size={16} /> Private Inquiry (Only visible to admins)
+                                        <Lock size={16} /> {t('privateLabel')}
                                     </label>
                                 </div>
 
                                 <button type="submit" className={styles.submitBtn} disabled={loading}>
-                                    {loading ? 'Submitting...' : (
+                                    {loading ? t('submitting') : (
                                         <>
-                                            Submit Inquiry <Send size={18} />
+                                            {t('submit')} <Send size={18} />
                                         </>
                                     )}
                                 </button>

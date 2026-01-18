@@ -94,25 +94,37 @@
         "comments": "Comments",
         "share": "Share",
         "linkCopied": "Link copied!",
-        "times": " times"
+        "times": " times",
+        "writePost": "Write Post",
+        "postTitle": "Title",
+        "postContent": "Content",
+        "postSubmit": "Post",
+        "postSuccess": "Post created successfully!",
+        "postError": "Failed to create post.",
+        "addComment": "Add a comment...",
+        "commentSubmit": "Post",
+        "commentSuccess": "Comment added!",
+        "commentError": "Failed to add comment."
     },
     "Inquiry": {
         "title": "1:1 Inquiry",
+        "subtitle": "We will get back to you as soon as possible.",
         "submitInquiry": "Submit Inquiry",
-        "titlePlaceholder": "Title",
-        "contentPlaceholder": "Inquiry content",
+        "titleLabel": "Title",
+        "titlePlaceholder": "Enter inquiry title",
+        "contentLabel": "Content",
+        "contentPlaceholder": "Enter detailed content",
+        "privateLabel": "Private Inquiry (Only visible to admins)",
         "submit": "Submit Inquiry",
         "submitting": "Submitting...",
+        "successTitle": "Inquiry Submitted!",
+        "successSubtitle": "Redirecting to your profile...",
+        "error": "Failed to submit inquiry. Please try again.",
         "myInquiries": "My Inquiries",
         "noInquiries": "No inquiries yet.",
         "answer": "Answer",
         "waitingForAnswer": "Waiting for answer...",
-        "inquirySubmitted": "Inquiry submitted successfully.",
-        "submitFailed": "Failed to submit",
-        "loading": "Loading...",
-        "inquiryTitle": "Submit Inquiry",
-        "inquiryDescription": "Have a project request or technical question? Please login and leave a private inquiry.",
-        "goToInquiry": "Go to Inquiry"
+        "loading": "Loading..."
     },
     "Portfolio": {
         "title": "My Portfolio",
@@ -194,7 +206,10 @@
         "linkedin": "LinkedIn",
         "bio": "Embedded systems engineer with a passion for creating reliable, high-performance firmware.",
         "address": "Address",
-        "addressValue": "Seoul, South Korea"
+        "addressValue": "Seoul, South Korea",
+        "inquiryTitle": "1:1 Inquiry",
+        "inquiryDescription": "Have a project request or technical question? Please login and leave a private inquiry.",
+        "goToInquiry": "Go to Inquiry"
     },
     "About": {
         "title": "About Me",

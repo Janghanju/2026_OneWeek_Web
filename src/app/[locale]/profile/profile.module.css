@@ -180,7 +180,7 @@
 }
 
 .inquiryCard {
-    background: var(--card);
+    background: rgba(30, 41, 59, 0.8);
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 1.5rem;

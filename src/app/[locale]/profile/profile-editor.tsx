@@ -2,16 +2,18 @@
 
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { User, Edit2, Save, X, Camera, Shield } from 'lucide-react';
+import { User, Edit2, Save, X, Camera, Shield, Crown, Zap, Star, Gem } from 'lucide-react';
 import styles from './profile.module.css';
 import { SignOutButton } from './sign-out-button';
 
 interface ProfileEditorProps {
     user: {
+        id?: string;
         name?: string | null;
         email?: string | null;
         image?: string | null;
         role?: string;
+        membership?: string;
     };
 }
 
@@ -22,9 +24,24 @@ export function ProfileEditor({ user }: ProfileEditorProps) {
     const [image, setImage] = useState(user.image || '');
     const [loading, setLoading] = useState(false);
 
-    // Master Admin Logic (Hardcoded for safety/simplicity in this demo)
+    // Master Admin Logic
     const isMaster = user.email === 'hanju1215@naver.com';
-    const [promoteEmail, setPromoteEmail] = useState('');
+    const [targetEmail, setTargetEmail] = useState('');
+    const [targetMembership, setTargetMembership] = useState('FREE');
+
+    const membershipIcons: Record<string, React.ReactNode> = {
+        'FREE': <Zap size={14} />,
+        'BASIC': <Star size={14} />,
+        'PREMIUM': <Crown size={14} />,
+        'MASTER': <Gem size={14} />,
+    };
+
+    const membershipColors: Record<string, string> = {
+        'FREE': 'var(--muted-foreground)',
+        'BASIC': '#3b82f6',
+        'PREMIUM': '#8b5cf6',
+        'MASTER': '#f59e0b',
+    };
 
     const handleSave = async () => {
         setLoading(true);
@@ -46,22 +63,26 @@ export function ProfileEditor({ user }: ProfileEditorProps) {
         }
     };
 
-    const handlePromote = async () => {
-        if (!promoteEmail) return;
+    const handleUpdateUser = async (action: 'promote' | 'membership') => {
+        if (!targetEmail) return;
         try {
-            const res = await fetch('/api/admin/promote', {
+            const endpoint = action === 'promote' ? '/api/admin/promote' : '/api/admin/membership';
+            const body = action === 'promote' ? { email: targetEmail } : { email: targetEmail, membership: targetMembership };
+
+            const res = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: promoteEmail }),
+                body: JSON.stringify(body),
             });
+
             if (res.ok) {
-                alert(`Successfully promoted ${promoteEmail} to ADMIN`);
-                setPromoteEmail('');
+                alert(`Successfully updated ${targetEmail}`);
+                setTargetEmail('');
             } else {
-                alert('Failed to promote user');
+                alert('Failed to update user');
             }
         } catch (e) {
-            alert('Error promoting user');
+            alert('Error updating user');
         }
     };
 
@@ -82,7 +103,6 @@ export function ProfileEditor({ user }: ProfileEditorProps) {
                         <label htmlFor="avatar-upload" style={{ cursor: 'pointer' }}>
                             <Camera size={24} color="white" />
                         </label>
-                        {/* In a real app, we'd handle file upload here. For now, we'll just use URL input */}
                     </div>
                 )}
             </div>
@@ -120,15 +140,35 @@ export function ProfileEditor({ user }: ProfileEditorProps) {
                 <>
                     <h2 className={styles.name}>{name}</h2>
                     <p className={styles.email}>{user.email}</p>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
-                        <span className={styles.roleBadge}>
-                            {user.role === 'ADMIN' && <Shield size={12} />}
+
+                    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.5rem', marginTop: '1rem' }}>
+                        <span className={styles.roleBadge} style={{
+                            background: 'rgba(59, 130, 246, 0.1)',
+                            color: 'var(--primary)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.3rem'
+                        }}>
+                            {user.role === 'ADMIN' ? <Shield size={12} /> : <User size={12} />}
                             {user.role || 'USER'}
                         </span>
-                        <button onClick={() => setIsEditing(true)} className={styles.editBtn}>
-                            <Edit2 size={14} /> Edit
-                        </button>
+
+                        <span className={styles.roleBadge} style={{
+                            background: `${membershipColors[user.membership || 'FREE']}20`,
+                            color: membershipColors[user.membership || 'FREE'],
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.3rem',
+                            border: `1px solid ${membershipColors[user.membership || 'FREE']}40`
+                        }}>
+                            {membershipIcons[user.membership || 'FREE']}
+                            {user.membership || 'FREE'} Tier
+                        </span>
                     </div>
+
+                    <button onClick={() => setIsEditing(true)} className={styles.editBtn} style={{ marginTop: '1rem' }}>
+                        <Edit2 size={14} /> Edit Profile
+                    </button>
                 </>
             )}
 
@@ -141,17 +181,33 @@ export function ProfileEditor({ user }: ProfileEditorProps) {
                     <h4 style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                         <Shield size={14} color="var(--primary)" /> Master Admin Area
                     </h4>
-                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                         <input
                             className={styles.input}
-                            placeholder="User Email to Promote"
-                            value={promoteEmail}
-                            onChange={e => setPromoteEmail(e.target.value)}
+                            placeholder="User Email"
+                            value={targetEmail}
+                            onChange={e => setTargetEmail(e.target.value)}
                             style={{ fontSize: '0.8rem', padding: '0.5rem' }}
                         />
-                        <button onClick={handlePromote} className={styles.saveBtn} style={{ padding: '0.5rem' }}>
-                            Promote
-                        </button>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                            <select
+                                className={styles.input}
+                                value={targetMembership}
+                                onChange={e => setTargetMembership(e.target.value)}
+                                style={{ fontSize: '0.8rem', padding: '0.5rem', flex: 1 }}
+                            >
+                                <option value="FREE">FREE</option>
+                                <option value="BASIC">BASIC</option>
+                                <option value="PREMIUM">PREMIUM</option>
+                                <option value="MASTER">MASTER</option>
+                            </select>
+                            <button onClick={() => handleUpdateUser('membership')} className={styles.saveBtn} style={{ padding: '0.5rem', flex: 1 }}>
+                                Set Tier
+                            </button>
+                            <button onClick={() => handleUpdateUser('promote')} className={styles.saveBtn} style={{ padding: '0.5rem', flex: 1, background: '#10b981' }}>
+                                Promote
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

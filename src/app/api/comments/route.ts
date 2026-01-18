@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     }
 
     try {
-        const { newsId, content } = await req.json();
+        const { newsId, content, parentId } = await req.json();
 
         if (!newsId || !content) {
             return NextResponse.json({ error: "Missing fields" }, { status: 400 });
@@ -45,6 +45,7 @@ export async function POST(req: Request) {
                 content,
                 newsId: parseInt(newsId),
                 userId: session.user.id,
+                parentId: parentId || null,
             },
             include: {
                 user: {

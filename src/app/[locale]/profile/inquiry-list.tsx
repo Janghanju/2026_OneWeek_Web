@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { MessageSquare, CheckCircle, User, Lock } from 'lucide-react';
+import { MessageSquare, CheckCircle, User, Lock, Send, Reply } from 'lucide-react';
 import styles from './profile.module.css';
 
 interface Inquiry {
@@ -29,6 +29,7 @@ export function InquiryList({ inquiries: initialInquiries, isAdmin = false }: In
     const [loading, setLoading] = useState(false);
 
     const handleReplySubmit = async (id: string) => {
+        if (!replyContent.trim()) return;
         setLoading(true);
         try {
             const res = await fetch('/api/inquiry/answer', {
@@ -38,8 +39,6 @@ export function InquiryList({ inquiries: initialInquiries, isAdmin = false }: In
             });
 
             if (!res.ok) throw new Error('Failed');
-
-            const data = await res.json();
 
             // Update local state
             setInquiries(prev => prev.map(inq =>
@@ -66,7 +65,10 @@ export function InquiryList({ inquiries: initialInquiries, isAdmin = false }: In
     return (
         <div className={styles.inquiryList}>
             {inquiries.map((inquiry) => (
-                <div key={inquiry.id} className={styles.inquiryCard}>
+                <div key={inquiry.id} className={styles.inquiryCard} style={{
+                    borderLeft: inquiry.answer ? '4px solid #10b981' : '4px solid #3b82f6',
+                    padding: '1.5rem'
+                }}>
                     <div className={styles.inquiryHeader}>
                         <div style={{ flex: 1 }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -85,55 +87,85 @@ export function InquiryList({ inquiries: initialInquiries, isAdmin = false }: In
                             </div>
                         </div>
                         <span className={`${styles.statusBadge} ${inquiry.answer ? styles.statusAnswered : styles.statusPending}`}>
-                            {inquiry.answer ? 'Answered' : 'Pending'}
+                            {inquiry.answer ? 'Resolved' : 'Waiting'}
                         </span>
                     </div>
 
-                    <p className={styles.inquiryContent}>{inquiry.content}</p>
+                    <div style={{
+                        marginTop: '1rem',
+                        padding: '1rem',
+                        background: 'rgba(255,255,255,0.03)',
+                        borderRadius: '12px',
+                        fontSize: '0.95rem',
+                        lineHeight: '1.5'
+                    }}>
+                        <p style={{ color: 'var(--foreground)' }}>{inquiry.content}</p>
+                    </div>
 
                     {inquiry.answer && (
-                        <div className={styles.answerBox}>
-                            <div className={styles.answerTitle}>
-                                <CheckCircle size={16} />
-                                Admin Answer
+                        <div style={{
+                            marginTop: '1rem',
+                            padding: '1rem',
+                            background: 'rgba(16, 185, 129, 0.05)',
+                            borderRadius: '12px',
+                            border: '1px solid rgba(16, 185, 129, 0.1)',
+                            marginLeft: '1rem'
+                        }}>
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem',
+                                color: '#10b981',
+                                fontWeight: 700,
+                                fontSize: '0.85rem',
+                                marginBottom: '0.5rem'
+                            }}>
+                                <Reply size={14} style={{ transform: 'scaleX(-1)' }} />
+                                Admin Response
                             </div>
-                            <p className={styles.answerContent}>{inquiry.answer}</p>
+                            <p style={{ color: 'var(--foreground)', fontSize: '0.95rem' }}>{inquiry.answer}</p>
                         </div>
                     )}
 
-                    {isAdmin && !inquiry.answer && (
-                        <div style={{ marginTop: '1rem', borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
+                    {isAdmin && (
+                        <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'flex-end' }}>
                             {replyingId === inquiry.id ? (
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                     <textarea
                                         className={styles.input}
-                                        style={{ minHeight: '100px', resize: 'vertical' }}
+                                        style={{ minHeight: '100px', resize: 'vertical', background: 'var(--background)' }}
                                         value={replyContent}
                                         onChange={e => setReplyContent(e.target.value)}
-                                        placeholder="Write your answer..."
+                                        placeholder="Write your response..."
                                     />
-                                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                    <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+                                        <button
+                                            onClick={() => setReplyingId(null)}
+                                            className={styles.cancelBtn}
+                                            style={{ padding: '0.5rem 1rem' }}
+                                        >
+                                            Cancel
+                                        </button>
                                         <button
                                             onClick={() => handleReplySubmit(inquiry.id)}
                                             disabled={loading}
                                             className={styles.saveBtn}
+                                            style={{ padding: '0.5rem 1rem', background: '#10b981' }}
                                         >
-                                            Submit Answer
-                                        </button>
-                                        <button
-                                            onClick={() => setReplyingId(null)}
-                                            className={styles.cancelBtn}
-                                        >
-                                            Cancel
+                                            {loading ? 'Sending...' : 'Send Response'}
                                         </button>
                                     </div>
                                 </div>
                             ) : (
                                 <button
-                                    onClick={() => setReplyingId(inquiry.id)}
+                                    onClick={() => {
+                                        setReplyingId(inquiry.id);
+                                        setReplyContent(inquiry.answer || '');
+                                    }}
                                     className={styles.editBtn}
+                                    style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}
                                 >
-                                    Reply
+                                    <Reply size={14} /> {inquiry.answer ? 'Edit Response' : 'Reply'}
                                 </button>
                             )}
                         </div>
