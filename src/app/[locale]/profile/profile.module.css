@@ -180,7 +180,9 @@
 }
 
 .inquiryCard {
-    background: rgba(30, 41, 59, 0.8);
+    background: #1e293b;
+    position: relative;
+    z-index: 10;
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 1.5rem;
@@ -261,11 +263,25 @@
 }
 
 @media (max-width: 768px) {
+    .container {
+        padding: 5rem 1rem 2rem;
+    }
+
     .grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .profileCard {
         position: static;
+        margin-bottom: 2rem;
+    }
+
+    .header {
+        margin-bottom: 2rem;
+    }
+
+    .title {
+        font-size: 2rem;
     }
 }

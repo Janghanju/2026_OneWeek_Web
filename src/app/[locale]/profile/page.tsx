@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import styles from './profile.module.css';
 import { Navbar } from "@/components/navbar";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
-import { MessageSquare, LayoutDashboard, Settings, Bell, ShieldCheck, MessageCircle, Clock, Crown, Zap, Star, Gem, Cpu, Plus } from 'lucide-react';
+import { MessageSquare, LayoutDashboard, Settings, Bell, ShieldCheck, MessageCircle, Clock, Crown, Zap, Star, Gem, Cpu, Plus, Activity, Bookmark, Shield } from 'lucide-react';
 import { ProfileEditor } from './profile-editor';
 import { InquiryList } from './inquiry-list';
 
@@ -145,6 +145,25 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                             )}
                         </div>
 
+                        {/* Security Status */}
+                        <div style={{ background: 'var(--card)', padding: '1.5rem', borderRadius: '24px', border: '1px solid var(--border)' }}>
+                            <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <Shield size={18} /> Security Status
+                            </h4>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9rem' }}>
+                                    <span style={{ color: 'var(--muted-foreground)' }}>Password</span>
+                                    <span style={{ color: '#22c55e', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                                        <ShieldCheck size={14} /> Secure
+                                    </span>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9rem' }}>
+                                    <span style={{ color: 'var(--muted-foreground)' }}>2FA</span>
+                                    <span style={{ color: 'var(--muted-foreground)', fontSize: '0.8rem' }}>Disabled</span>
+                                </div>
+                            </div>
+                        </div>
+
                         {/* Quick Actions */}
                         <div style={{ background: 'var(--card)', padding: '1.5rem', borderRadius: '24px', border: '1px solid var(--border)' }}>
                             <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -161,8 +180,52 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                         </div>
                     </div>
 
-                    {/* Right Column: Inquiries */}
+                    {/* Right Column: Inquiries & Activity */}
                     <div className={styles.inquirySection}>
+                        {/* Recent Activity Section */}
+                        <div style={{ marginBottom: '2rem' }}>
+                            <h3 className={styles.sectionTitle} style={{ marginBottom: '1rem' }}>
+                                <Activity size={24} className="text-blue-500" />
+                                Recent Activity
+                            </h3>
+                            {recentComments.length > 0 ? (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                    {recentComments.map((comment: any) => (
+                                        <div key={comment.id} style={{
+                                            background: 'rgba(30, 41, 59, 0.6)',
+                                            padding: '1rem',
+                                            borderRadius: '16px',
+                                            border: '1px solid var(--border)',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            gap: '0.5rem'
+                                        }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>
+                                                <span>Commented on <strong>{comment.news?.title || 'News'}</strong></span>
+                                                <span>{new Date(comment.createdAt).toLocaleDateString()}</span>
+                                            </div>
+                                            <p style={{ fontSize: '0.95rem', color: 'var(--foreground)' }}>"{comment.content}"</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div style={{ padding: '2rem', textAlign: 'center', background: 'var(--card)', borderRadius: '16px', border: '1px solid var(--border)' }}>
+                                    <p style={{ color: 'var(--muted-foreground)' }}>No recent activity.</p>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Saved Items Section (Placeholder) */}
+                        <div style={{ marginBottom: '2rem' }}>
+                            <h3 className={styles.sectionTitle} style={{ marginBottom: '1rem' }}>
+                                <Bookmark size={24} className="text-blue-500" />
+                                Saved Items
+                            </h3>
+                            <div style={{ padding: '2rem', textAlign: 'center', background: 'var(--card)', borderRadius: '16px', border: '1px solid var(--border)' }}>
+                                <p style={{ color: 'var(--muted-foreground)' }}>You haven't saved any items yet.</p>
+                            </div>
+                        </div>
+
                         <h3 className={styles.sectionTitle}>
                             <MessageSquare size={24} className="text-blue-500" />
                             {isAdmin ? 'Admin Inquiry Dashboard' : 'Inquiry History'}
