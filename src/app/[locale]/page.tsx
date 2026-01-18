@@ -1,22 +1,19 @@
 "use client";
 
-import { useState } from "react";
+// import { useState } from "react";
 import { Navbar } from "@/components/navbar";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import styles from "./home.module.css";
-import { ArrowRight, Code, Globe, Zap, Newspaper, CheckCircle, Brain, Cloud, GitBranch, Shield, Database, Loader2 } from "lucide-react";
+import { ArrowRight, Code, Globe, Zap, Newspaper, CheckCircle, Brain, Cloud, GitBranch, Shield, Database } from "lucide-react";
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 
-const Spline = dynamic(() => import('@splinetool/react-spline'), {
-  ssr: false,
-});
+const Hero3D = dynamic(() => import('@/components/Hero3D'), { ssr: false });
 
 export default function Home() {
   const t = useTranslations('Home');
-  const [isSplineLoaded, setIsSplineLoaded] = useState(false);
 
   const services = [
     { icon: <Globe size={32} className={styles.serviceIcon} />, title: t('webDevelopment'), desc: t('webDevelopmentDesc') },
@@ -60,17 +57,7 @@ export default function Home() {
         <div className={styles.heroVisual}>
           <div className={styles.glow} />
           <div className={styles.grid} />
-          <div className={styles.splineWrapper}>
-            {!isSplineLoaded && (
-              <div className={styles.splineLoader}>
-                <Loader2 className={styles.spinner} size={48} />
-              </div>
-            )}
-            <Spline
-              scene="https://prod.spline.design/4I4wQYzT2e23xPiF/scene.splinecode"
-              onLoad={() => setIsSplineLoaded(true)}
-            />
-          </div>
+          <Hero3D />
         </div>
       </section>
 
