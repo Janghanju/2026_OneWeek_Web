@@ -5,7 +5,7 @@ import { MotionContainer } from "@/components/ui/motion-container";
 import { MotionCard } from "@/components/ui/motion-card";
 import { Mail, Phone, Github, Linkedin, MapPin, MessageCircle } from 'lucide-react';
 import styles from './Contact.module.css';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 
 export default function Contact() {
     const t = useTranslations('Contact');
