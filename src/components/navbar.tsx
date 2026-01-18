@@ -109,7 +109,7 @@ export function Navbar() {
                                 {session.user?.name || 'Profile'}
                             </Link>
                             <button
-                                onClick={() => signOut({ callbackUrl: '/' })}
+                                onClick={() => signOut({ callbackUrl: window.location.origin })}
                                 style={{
                                     background: 'none',
                                     border: 'none',
@@ -192,7 +192,7 @@ export function Navbar() {
                                 <User size={18} /> Profile
                             </Link>
                             <button
-                                onClick={() => signOut({ callbackUrl: '/' })}
+                                onClick={() => signOut({ callbackUrl: window.location.origin })}
                                 style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--foreground)', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
                             >
                                 <LogOut size={18} /> Logout
