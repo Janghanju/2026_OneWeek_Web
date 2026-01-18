@@ -12,17 +12,28 @@ datasource db {
 }
 
 model News {
-  id        Int      @id @default(autoincrement())
-  title     String
-  summary   String?
-  source    String
-  url       String   @unique
-  createdAt DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  title       String
+  summary     String?
+  source      String
+  url         String   @unique
+  isUserPost  Boolean  @default(false)
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  comments    Comment[]
 }
 
 enum Role {
   USER
   ADMIN
+}
+
+enum Membership {
+  FREE
+  BASIC
+  PREMIUM
+  MASTER
 }
 
 model User {
@@ -33,9 +44,24 @@ model User {
   emailVerified DateTime?
   image         String?
   role          Role      @default(USER)
+  membership    Membership @default(FREE)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   inquiries     Inquiry[]
+  comments      Comment[]
+  devices       Device[]
+  news          News[]
+}
+
+model Device {
+  id          String   @id @default(cuid())
+  name        String
+  type        String
+  status      String   @default("OFFLINE")
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Inquiry {
@@ -60,5 +86,18 @@ model ClickLog {
 model Subscription {
   id        Int      @id @default(autoincrement())
   email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  newsId    Int
+  news      News     @relation(fields: [newsId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  parentId  String?
+  parent    Comment? @relation("CommentReplies", fields: [parentId], references: [id])
+  replies   Comment[] @relation("CommentReplies")
   createdAt DateTime @default(now())
 }
