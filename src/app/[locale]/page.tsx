@@ -8,6 +8,7 @@ import { ArrowRight, Code, Globe, Zap, Newspaper, CheckCircle, Brain, Cloud, Git
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
+import { SpotlightCard } from "@/components/ui/spotlight-card";
 
 const Spline = dynamic(() => import('@splinetool/react-spline'), {
   ssr: false,
@@ -78,11 +79,11 @@ export default function Home() {
         <h2 className={styles.sectionTitle}>{t('servicesTitle')}</h2>
         <div className={styles.serviceGrid}>
           {services.map((service, index) => (
-            <div key={index} className={styles.serviceCard}>
+            <SpotlightCard key={index} className={styles.serviceCard}>
               {service.icon}
               <h3>{service.title}</h3>
               <p>{service.desc}</p>
-            </div>
+            </SpotlightCard>
           ))}
         </div>
       </section>
