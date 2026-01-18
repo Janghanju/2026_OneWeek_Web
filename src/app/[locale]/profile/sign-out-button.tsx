@@ -8,7 +8,7 @@ export function SignOutButton() {
     return (
         <button
             className={styles.logoutBtn}
-            onClick={() => signOut({ callbackUrl: '/' })}
+            onClick={() => signOut({ callbackUrl: window.location.origin })}
         >
             <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
                 <LogOut size={18} />
