@@ -61,6 +61,7 @@ export async function POST(req: Request) {
         }
 
         let newsId: number;
+        let newsTitle = title || '';
 
         // Check if newsIdParam is a number
         if (typeof newsIdParam === 'number') {
@@ -90,6 +91,13 @@ export async function POST(req: Request) {
                 });
             }
             newsId = news.id;
+            newsTitle = news.title;
+        }
+
+        // Get news title if not provided
+        if (!newsTitle) {
+            const news = await prisma.news.findUnique({ where: { id: newsId } });
+            newsTitle = news?.title || 'News';
         }
 
         const comment = await prisma.comment.create({
@@ -105,6 +113,27 @@ export async function POST(req: Request) {
                 }
             }
         });
+
+        // If this is a reply to another comment, notify the parent comment author
+        if (parentId) {
+            const parentComment = await prisma.comment.findUnique({
+                where: { id: parentId },
+                include: { user: true }
+            });
+
+            // Don't notify if replying to own comment
+            if (parentComment && parentComment.userId !== session.user.id) {
+                await prisma.notification.create({
+                    data: {
+                        type: 'COMMENT_REPLY',
+                        title: '댓글 답글 알림',
+                        message: `${session.user.name || '익명'}님이 "${newsTitle}" 게시글에서 회원님의 댓글에 답글을 남겼습니다.`,
+                        link: `/news`,
+                        userId: parentComment.userId
+                    }
+                });
+            }
+        }
 
         return NextResponse.json(comment);
     } catch (error) {

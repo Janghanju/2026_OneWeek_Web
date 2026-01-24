@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { sendInquiryAnswerEmail } from "@/lib/email";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
@@ -39,12 +40,30 @@ export async function PUT(req: Request) {
             data: { answer }
         });
 
-        // Simulate email sending
+        // Get user info for notification and email
         const user = await prisma.user.findUnique({ where: { id: inquiry.userId } });
-        console.log(`[EMAIL SENT] To: ${user?.email}, Subject: Your inquiry has been answered. Content: ${answer}`);
+
+        if (user) {
+            // Create in-app notification
+            await prisma.notification.create({
+                data: {
+                    type: 'INQUIRY_ANSWER',
+                    title: '문의 답변 도착',
+                    message: `"${inquiry.title}" 문의에 대한 답변이 등록되었습니다.`,
+                    link: '/profile',
+                    userId: user.id
+                }
+            });
+
+            // Send email notification
+            if (user.email) {
+                await sendInquiryAnswerEmail(user.email, inquiry.title, answer);
+            }
+        }
 
         return NextResponse.json({ inquiry });
     } catch (error) {
+        console.error("Inquiry answer error:", error);
         return NextResponse.json({ error: "Internal Error" }, { status: 500 });
     }
 }

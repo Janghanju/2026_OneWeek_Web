@@ -102,3 +102,6 @@ temp/
 
 # Sensitive Images
 그림1.png
+
+# Build logs
+build-log.txt

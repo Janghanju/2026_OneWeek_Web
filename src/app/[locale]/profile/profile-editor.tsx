@@ -172,12 +172,12 @@ export function ProfileEditor({ user }: ProfileEditorProps) {
                 </>
             )}
 
-            <div style={{ marginTop: '2rem', width: '100%' }}>
+            <div style={{ marginTop: '2rem', width: '100%', position: 'relative', zIndex: 10 }}>
                 <SignOutButton />
             </div>
 
             {isMaster && (
-                <div style={{ marginTop: '2rem', paddingTop: '1rem', borderTop: '1px solid var(--border)', width: '100%' }}>
+                <div style={{ marginTop: '2rem', paddingTop: '1rem', borderTop: '1px solid var(--border)', width: '100%', position: 'relative', zIndex: 10 }}>
                     <h4 style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                         <Shield size={14} color="var(--primary)" /> Master Admin Area
                     </h4>

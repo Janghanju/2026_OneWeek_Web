@@ -113,7 +113,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                         <ProfileEditor user={dbUser} />
 
                         {/* IoT Devices Section (New) */}
-                        <div style={{ background: 'var(--card)', padding: '1.5rem', borderRadius: '24px', border: '1px solid var(--border)' }}>
+                        <div className={styles.sectionCard}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                                 <h4 style={{ fontSize: '1rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                     <Cpu size={18} /> IoT Devices
@@ -146,7 +146,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                         </div>
 
                         {/* Security Status */}
-                        <div style={{ background: 'var(--card)', padding: '1.5rem', borderRadius: '24px', border: '1px solid var(--border)' }}>
+                        <div className={styles.sectionCard}>
                             <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                 <Shield size={18} /> Security Status
                             </h4>
@@ -165,7 +165,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                         </div>
 
                         {/* Quick Actions */}
-                        <div style={{ background: 'var(--card)', padding: '1.5rem', borderRadius: '24px', border: '1px solid var(--border)' }}>
+                        <div className={styles.sectionCard}>
                             <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                 <Settings size={18} /> Quick Actions
                             </h4>

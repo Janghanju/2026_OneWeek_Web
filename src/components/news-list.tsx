@@ -389,7 +389,7 @@ export default function NewsList() {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.3, delay: idx * 0.05 }}
                             >
-                                <div className={`${styles.card} ${item.isUserPost ? styles.userPost : ''}`}>
+                                <div className={`${styles.card} ${item.isUserPost ? styles.userPost : ''} ${item.commentCount && item.commentCount > 0 ? styles.hasComments : ''}`}>
                                     <div className={styles.cardHeader}>
                                         <h2 className={styles.cardTitle}>
                                             {item.isUserPost ? (

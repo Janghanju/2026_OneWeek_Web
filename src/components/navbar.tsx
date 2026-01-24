@@ -1,14 +1,27 @@
 'use client';
 
 import { Link, usePathname, useRouter } from '@/i18n/routing';
-import { Menu, X, Globe, LogOut, User, MessageSquare } from 'lucide-react';
-import { useState } from 'react';
+import { Menu, X, Globe, LogOut, User, MessageSquare, Bell } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useSession, signOut } from "next-auth/react";
+
+const getAppUrl = () => process.env.NEXT_PUBLIC_APP_URL || (typeof window !== 'undefined' ? window.location.origin : '');
 
 export function Navbar() {
     const { data: session } = useSession();
     const [isOpen, setIsOpen] = useState(false);
+    const [unreadCount, setUnreadCount] = useState(0);
+
+    // Fetch notification count
+    useEffect(() => {
+        if (session?.user) {
+            fetch('/api/notifications')
+                .then(res => res.json())
+                .then(data => setUnreadCount(data.unreadCount || 0))
+                .catch(() => { });
+        }
+    }, [session]);
     const pathname = usePathname();
     const router = useRouter();
     const locale = useLocale();
@@ -87,6 +100,39 @@ export function Navbar() {
                             >
                                 <MessageSquare size={16} /> Inquiry
                             </Link>
+                            {/* Notification Bell */}
+                            <Link
+                                href="/profile"
+                                style={{
+                                    padding: '0.5rem',
+                                    color: 'var(--muted-foreground)',
+                                    position: 'relative',
+                                    display: 'flex',
+                                    alignItems: 'center'
+                                }}
+                                title="Notifications"
+                            >
+                                <Bell size={18} />
+                                {unreadCount > 0 && (
+                                    <span style={{
+                                        position: 'absolute',
+                                        top: '0',
+                                        right: '0',
+                                        background: '#ef4444',
+                                        color: 'white',
+                                        borderRadius: '50%',
+                                        width: '16px',
+                                        height: '16px',
+                                        fontSize: '10px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        fontWeight: 700
+                                    }}>
+                                        {unreadCount > 9 ? '9+' : unreadCount}
+                                    </span>
+                                )}
+                            </Link>
                             <Link
                                 href="/profile"
                                 style={{
@@ -109,7 +155,7 @@ export function Navbar() {
                                 {session.user?.name || 'Profile'}
                             </Link>
                             <button
-                                onClick={() => signOut({ callbackUrl: window.location.origin })}
+                                onClick={() => signOut({ callbackUrl: getAppUrl() })}
                                 style={{
                                     background: 'none',
                                     border: 'none',
@@ -192,7 +238,7 @@ export function Navbar() {
                                 <User size={18} /> Profile
                             </Link>
                             <button
-                                onClick={() => signOut({ callbackUrl: window.location.origin })}
+                                onClick={() => signOut({ callbackUrl: getAppUrl() })}
                                 style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--foreground)', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
                             >
                                 <LogOut size={18} /> Logout
