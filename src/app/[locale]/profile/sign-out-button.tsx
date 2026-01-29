@@ -4,7 +4,14 @@ import { signOut } from "next-auth/react";
 import styles from './profile.module.css';
 import { LogOut } from 'lucide-react';
 
-const getAppUrl = () => process.env.NEXT_PUBLIC_APP_URL || (typeof window !== 'undefined' ? window.location.origin : '');
+const getAppUrl = () => {
+    if (typeof window === 'undefined') return '';
+    const hostname = window.location.hostname;
+    if (hostname.includes('janghanju-server.duckdns.org')) {
+        return 'https://janghanju-server.duckdns.org';
+    }
+    return window.location.origin;
+};
 
 export function SignOutButton() {
     return (

@@ -21,9 +21,13 @@ export async function GET() {
         });
 
         return NextResponse.json({ notifications, unreadCount });
-    } catch (error) {
+    } catch (error: any) {
+        // If notification table doesn't exist yet, return empty data gracefully
+        if (error.code === 'P2021' || error.message?.includes('does not exist')) {
+            return NextResponse.json({ notifications: [], unreadCount: 0 });
+        }
         console.error("Notification fetch error:", error);
-        return NextResponse.json({ error: "Internal Error" }, { status: 500 });
+        return NextResponse.json({ notifications: [], unreadCount: 0 });
     }
 }
 

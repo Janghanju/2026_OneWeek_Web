@@ -6,7 +6,16 @@ import { useState, useEffect } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useSession, signOut } from "next-auth/react";
 
-const getAppUrl = () => process.env.NEXT_PUBLIC_APP_URL || (typeof window !== 'undefined' ? window.location.origin : '');
+const getAppUrl = () => {
+    if (typeof window === 'undefined') return '';
+    // In production, use the actual hostname to construct the URL
+    const hostname = window.location.hostname;
+    if (hostname.includes('janghanju-server.duckdns.org')) {
+        return 'https://janghanju-server.duckdns.org';
+    }
+    // For local development, use origin (localhost:3000)
+    return window.location.origin;
+};
 
 export function Navbar() {
     const { data: session } = useSession();
