@@ -8,10 +8,12 @@ import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { MessageSquare, LayoutDashboard, Settings, Bell, ShieldCheck, MessageCircle, Clock, Crown, Zap, Star, Gem, Cpu, Plus, Activity, Bookmark, Shield } from 'lucide-react';
 import { ProfileEditor } from './profile-editor';
 import { InquiryList } from './inquiry-list';
+import { getTranslations } from 'next-intl/server';
 
 export default async function ProfilePage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
     const session = await auth();
+    const t = await getTranslations('Profile');
 
     if (!session || !session.user || !session.user.id) {
         redirect(`/${locale}/login`);
@@ -76,9 +78,9 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
 
     // Stats for dashboard feel
     const stats = [
-        { label: 'Inquiries', value: inquiries.length, icon: <MessageSquare size={20} /> },
-        { label: 'Comments', value: commentCount, icon: <MessageCircle size={20} /> },
-        { label: 'Membership', value: dbUser.membership, icon: <Crown size={20} /> },
+        { label: t('inquiries'), value: inquiries.length, icon: <MessageSquare size={20} /> },
+        { label: t('comments'), value: commentCount, icon: <MessageCircle size={20} /> },
+        { label: t('membership'), value: dbUser.membership, icon: <Crown size={20} /> },
     ];
 
     return (
@@ -88,8 +90,8 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
 
             <div className={styles.container}>
                 <div className={styles.header}>
-                    <h1 className={styles.title}>User Dashboard</h1>
-                    <p className={styles.subtitle}>Welcome back, {dbUser.name || 'User'}</p>
+                    <h1 className={styles.title}>{t('title')}</h1>
+                    <p className={styles.subtitle}>{t('welcome', { name: dbUser.name || 'User' })}</p>
                 </div>
 
                 {/* Dashboard Stats */}
@@ -112,11 +114,11 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         <ProfileEditor user={dbUser} />
 
-                        {/* IoT Devices Section (New) */}
+                        {/* IoT Devices Section */}
                         <div className={styles.sectionCard}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                                 <h4 style={{ fontSize: '1rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                    <Cpu size={18} /> IoT Devices
+                                    <Cpu size={18} /> {t('iotDevices')}
                                 </h4>
                                 <button style={{ background: 'none', border: 'none', color: 'var(--primary)', cursor: 'pointer' }}>
                                     <Plus size={18} />
@@ -125,8 +127,8 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
 
                             {dbUser.devices.length === 0 ? (
                                 <div style={{ textAlign: 'center', padding: '1rem', border: '1px dashed var(--border)', borderRadius: '12px' }}>
-                                    <p style={{ fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>No devices connected.</p>
-                                    <p style={{ fontSize: '0.7rem', color: 'var(--primary)', marginTop: '0.2rem' }}>Upgrade to BASIC to add devices</p>
+                                    <p style={{ fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>{t('noDevices')}</p>
+                                    <p style={{ fontSize: '0.7rem', color: 'var(--primary)', marginTop: '0.2rem' }}>{t('upgradeToAdd')}</p>
                                 </div>
                             ) : (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -148,7 +150,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                         {/* Security Status */}
                         <div className={styles.sectionCard}>
                             <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                <Shield size={18} /> Security Status
+                                <Shield size={18} /> {t('securityStatus')}
                             </h4>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9rem' }}>
@@ -158,7 +160,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                                     </span>
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9rem' }}>
-                                    <span style={{ color: 'var(--muted-foreground)' }}>2FA</span>
+                                    <span style={{ color: 'var(--muted-foreground)' }}>{t('twoFactorAuth')}</span>
                                     <span style={{ color: 'var(--muted-foreground)', fontSize: '0.8rem' }}>Disabled</span>
                                 </div>
                             </div>
@@ -171,7 +173,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                             </h4>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                 <a href={`/${locale}/inquiry`} style={{ padding: '0.75rem', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', textDecoration: 'none', color: 'var(--foreground)', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                    <MessageSquare size={16} /> New Inquiry
+                                    <MessageSquare size={16} /> {t('writeInquiry')}
                                 </a>
                                 <a href={`/${locale}/news`} style={{ padding: '0.75rem', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', textDecoration: 'none', color: 'var(--foreground)', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                     <LayoutDashboard size={16} /> Latest News
@@ -186,7 +188,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                         <div style={{ marginBottom: '2rem' }}>
                             <h3 className={styles.sectionTitle} style={{ marginBottom: '1rem' }}>
                                 <Activity size={24} className="text-blue-500" />
-                                Recent Activity
+                                {t('recentActivity')}
                             </h3>
                             {recentComments.length > 0 ? (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -210,7 +212,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
                                 </div>
                             ) : (
                                 <div style={{ padding: '2rem', textAlign: 'center', background: 'var(--card)', borderRadius: '16px', border: '1px solid var(--border)' }}>
-                                    <p style={{ color: 'var(--muted-foreground)' }}>No recent activity.</p>
+                                    <p style={{ color: 'var(--muted-foreground)' }}>{t('noComments')}</p>
                                 </div>
                             )}
                         </div>
@@ -228,7 +230,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
 
                         <h3 className={styles.sectionTitle}>
                             <MessageSquare size={24} className="text-blue-500" />
-                            {isAdmin ? 'Admin Inquiry Dashboard' : 'Inquiry History'}
+                            {isAdmin ? 'Admin Inquiry Dashboard' : t('myInquiries')}
                         </h3>
 
                         <InquiryList inquiries={inquiries} isAdmin={isAdmin} />

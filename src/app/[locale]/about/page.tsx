@@ -3,33 +3,36 @@ import { Navbar } from "@/components/navbar";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { MotionContainer } from "@/components/ui/motion-container";
 import { MotionCard } from "@/components/ui/motion-card";
-import { Code2, Cpu, Globe, Rocket, User, Briefcase, GraduationCap } from 'lucide-react';
+import { Code2, Cpu, User, Briefcase, Github } from 'lucide-react';
 import styles from './about.module.css';
+import { Link } from '@/i18n/routing';
 
 export default function About() {
     const t = useTranslations('About');
 
     const skills = [
-        { name: "Next.js / React", level: 90 },
-        { name: "TypeScript", level: 85 },
-        { name: "Node.js", level: 80 },
-        { name: "Embedded C/C++", level: 95 },
-        { name: "RTOS (FreeRTOS)", level: 85 },
-        { name: "PCB Design", level: 75 }
+        { name: "Arduino / ESP32", level: 95, category: "embedded" },
+        { name: "3D Printing / CAD", level: 85, category: "hardware" },
+        { name: "Next.js / React", level: 85, category: "web" },
+        { name: "TypeScript", level: 80, category: "web" },
+        { name: "Flutter / Dart", level: 75, category: "mobile" },
+        { name: "Python", level: 85, category: "backend" },
+        { name: "Node.js", level: 80, category: "backend" },
+        { name: "Docker / CI/CD", level: 70, category: "devops" }
     ];
 
     const experiences = [
         {
             title: t('job1Title'),
             company: t('job1Company'),
-            period: "2020 - Present",
-            desc: "Leading the firmware development team for IoT smart home devices."
+            period: t('job1Period'),
+            desc: t('job1Desc')
         },
         {
             title: t('job2Title'),
             company: t('job2Company'),
-            period: "2018 - 2020",
-            desc: "Developed low-power sensor nodes and implemented mesh networking protocols."
+            period: t('job2Period'),
+            desc: t('job2Desc')
         }
     ];
 
@@ -41,7 +44,6 @@ export default function About() {
             <main className={styles.main}>
                 <MotionContainer>
                     <div className={styles.header}>
-
                         <h1 className={styles.title}>{t('title')}</h1>
                         <p className={styles.subtitle}>{t('subtitle')}</p>
                     </div>
@@ -54,6 +56,27 @@ export default function About() {
                                 </div>
                                 <h2>{t('introTitle')}</h2>
                                 <p>{t('intro')}</p>
+                                <a
+                                    href="https://github.com/Janghanju"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '0.5rem',
+                                        marginTop: '1.5rem',
+                                        padding: '0.75rem 1.5rem',
+                                        background: 'var(--primary)',
+                                        color: 'white',
+                                        borderRadius: '12px',
+                                        textDecoration: 'none',
+                                        fontWeight: 600,
+                                        transition: 'transform 0.2s, box-shadow 0.2s'
+                                    }}
+                                >
+                                    <Github size={20} />
+                                    {t('githubLink')}
+                                </a>
                             </div>
                         </MotionCard>
 
