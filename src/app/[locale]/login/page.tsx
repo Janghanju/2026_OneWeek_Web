@@ -95,6 +95,18 @@ export default function LoginPage() {
                             className={styles.input}
                             required
                         />
+                        <Link
+                            href="/forgot-password"
+                            style={{
+                                fontSize: '0.85rem',
+                                color: 'var(--primary)',
+                                textDecoration: 'none',
+                                marginTop: '0.5rem',
+                                display: 'inline-block'
+                            }}
+                        >
+                            {t('forgotPassword')}
+                        </Link>
                     </div>
 
                     <button

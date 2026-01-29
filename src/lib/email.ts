@@ -159,3 +159,79 @@ export async function sendCommentReplyEmail(
         return false;
     }
 }
+
+// Email template for password reset
+const getPasswordResetTemplate = (resetLink: string, expiresIn: string) => `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 24px; text-align: center; }
+        .header h1 { margin: 0; font-size: 24px; }
+        .content { padding: 24px; text-align: center; }
+        .info-box { background: #fffbeb; border: 1px solid #fcd34d; padding: 16px; border-radius: 8px; margin: 16px 0; color: #92400e; font-size: 14px; }
+        .footer { text-align: center; padding: 16px; color: #94a3b8; font-size: 12px; }
+        .btn { display: inline-block; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 14px 32px; border-radius: 8px; text-decoration: none; margin: 20px 0; font-weight: 600; }
+        .link-text { color: #64748b; font-size: 12px; word-break: break-all; margin-top: 16px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔐 비밀번호 재설정</h1>
+        </div>
+        <div class="content">
+            <p style="color: #475569; margin-bottom: 24px;">비밀번호 재설정을 요청하셨습니다.<br>아래 버튼을 클릭하여 새 비밀번호를 설정해주세요.</p>
+            
+            <a href="${resetLink}" class="btn">
+                비밀번호 재설정하기
+            </a>
+            
+            <div class="info-box">
+                ⏰ 이 링크는 <strong>${expiresIn}</strong> 후에 만료됩니다.
+            </div>
+            
+            <p class="link-text">버튼이 작동하지 않으면 아래 링크를 복사하여 브라우저에 붙여넣으세요:<br>${resetLink}</p>
+        </div>
+        <div class="footer">
+            <p>본인이 요청하지 않았다면 이 이메일을 무시해주세요.</p>
+            <p>이 이메일은 OneWeek에서 발송되었습니다.</p>
+        </div>
+    </div>
+</body>
+</html>
+`;
+
+// Send password reset email
+export async function sendPasswordResetEmail(
+    to: string,
+    resetToken: string
+): Promise<boolean> {
+    const transporter = createTransporter();
+    const baseUrl = process.env.NEXTAUTH_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://janghanju-server.duckdns.org';
+    const resetLink = `${baseUrl}/ko/reset-password?token=${resetToken}`;
+    const expiresIn = '1시간';
+
+    if (!transporter) {
+        console.log(`[EMAIL SIMULATED] Password reset to: ${to}, Link: ${resetLink}`);
+        return false;
+    }
+
+    try {
+        await transporter.sendMail({
+            from: `"OneWeek 보안" <${process.env.SMTP_USER}>`,
+            to,
+            subject: '[OneWeek] 비밀번호 재설정 링크',
+            html: getPasswordResetTemplate(resetLink, expiresIn),
+        });
+        console.log(`[EMAIL SENT] Password reset to: ${to}`);
+        return true;
+    } catch (error) {
+        console.error('[EMAIL ERROR]', error);
+        return false;
+    }
+}
+
