@@ -5,11 +5,11 @@ import { randomBytes } from "crypto";
 
 export async function POST(req: Request) {
     try {
-        const { email } = await req.json();
+        const { email, name } = await req.json();
 
-        if (!email) {
+        if (!email || !name) {
             return NextResponse.json(
-                { error: "Email is required" },
+                { error: "Email and name are required" },
                 { status: 400 }
             );
         }
@@ -24,7 +24,16 @@ export async function POST(req: Request) {
             console.log(`[PASSWORD RESET] No user found for email: ${email}`);
             return NextResponse.json({
                 success: true,
-                message: "If the email exists, a reset link has been sent."
+                message: "If the information matches, a reset link has been sent."
+            });
+        }
+
+        // Verify name matches (case-insensitive)
+        if (!user.name || user.name.toLowerCase().trim() !== name.toLowerCase().trim()) {
+            console.log(`[PASSWORD RESET] Name mismatch for email: ${email}`);
+            return NextResponse.json({
+                success: true,
+                message: "If the information matches, a reset link has been sent."
             });
         }
 
@@ -33,7 +42,7 @@ export async function POST(req: Request) {
             console.log(`[PASSWORD RESET] OAuth-only user: ${email}`);
             return NextResponse.json({
                 success: true,
-                message: "If the email exists, a reset link has been sent."
+                message: "If the information matches, a reset link has been sent."
             });
         }
 
@@ -60,7 +69,7 @@ export async function POST(req: Request) {
 
         return NextResponse.json({
             success: true,
-            message: "If the email exists, a reset link has been sent."
+            message: "If the information matches, a reset link has been sent."
         });
 
     } catch (error: any) {
@@ -70,7 +79,7 @@ export async function POST(req: Request) {
         if (error.code === 'P2021' || error.message?.includes('does not exist')) {
             return NextResponse.json({
                 success: true,
-                message: "If the email exists, a reset link has been sent."
+                message: "If the information matches, a reset link has been sent."
             });
         }
 

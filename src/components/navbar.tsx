@@ -7,14 +7,21 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useSession, signOut } from "next-auth/react";
 
 const getAppUrl = () => {
-    if (typeof window === 'undefined') return '';
+    if (typeof window === 'undefined') return '/';
     // In production, use the actual hostname to construct the URL
     const hostname = window.location.hostname;
     if (hostname.includes('janghanju-server.duckdns.org')) {
         return 'https://janghanju-server.duckdns.org';
     }
-    // For local development, use origin (localhost:3000)
+    // For local development, use origin
     return window.location.origin;
+};
+
+const handleLogout = async () => {
+    // Sign out without automatic redirect
+    await signOut({ redirect: false });
+    // Manually redirect to correct URL
+    window.location.href = getAppUrl();
 };
 
 export function Navbar() {
@@ -164,7 +171,7 @@ export function Navbar() {
                                 {session.user?.name || 'Profile'}
                             </Link>
                             <button
-                                onClick={() => signOut({ callbackUrl: getAppUrl() })}
+                                onClick={handleLogout}
                                 style={{
                                     background: 'none',
                                     border: 'none',
@@ -247,7 +254,7 @@ export function Navbar() {
                                 <User size={18} /> Profile
                             </Link>
                             <button
-                                onClick={() => signOut({ callbackUrl: getAppUrl() })}
+                                onClick={handleLogout}
                                 style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--foreground)', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
                             >
                                 <LogOut size={18} /> Logout

@@ -5,11 +5,12 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { Navbar } from "@/components/navbar";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
-import { Mail, ArrowLeft, CheckCircle, Loader2 } from 'lucide-react';
+import { Mail, ArrowLeft, CheckCircle, Loader2, User } from 'lucide-react';
 
 export default function ForgotPasswordPage() {
     const t = useTranslations('ForgotPassword');
     const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [error, setError] = useState('');
@@ -23,7 +24,7 @@ export default function ForgotPasswordPage() {
             const res = await fetch('/api/auth/forgot-password', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email })
+                body: JSON.stringify({ email, name })
             });
 
             const data = await res.json();
@@ -118,6 +119,35 @@ export default function ForgotPasswordPage() {
                             </div>
 
                             <form onSubmit={handleSubmit}>
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label style={{
+                                        display: 'block',
+                                        marginBottom: '0.5rem',
+                                        fontWeight: 500,
+                                        color: 'var(--foreground)'
+                                    }}>
+                                        {t('name')}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        placeholder={t('namePlaceholder')}
+                                        required
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.875rem 1rem',
+                                            borderRadius: '12px',
+                                            border: '1px solid var(--border)',
+                                            background: 'var(--background)',
+                                            color: 'var(--foreground)',
+                                            fontSize: '1rem',
+                                            outline: 'none',
+                                            transition: 'border-color 0.2s'
+                                        }}
+                                    />
+                                </div>
+
                                 <div style={{ marginBottom: '1.5rem' }}>
                                     <label style={{
                                         display: 'block',

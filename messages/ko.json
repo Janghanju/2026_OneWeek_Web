@@ -58,13 +58,15 @@
     },
     "ForgotPassword": {
         "title": "비밀번호 찾기",
-        "subtitle": "가입하신 이메일을 입력하시면 비밀번호 재설정 링크를 보내드립니다.",
+        "subtitle": "가입 시 등록한 이름과 이메일을 입력하시면 비밀번호 재설정 링크를 보내드립니다.",
+        "name": "이름",
+        "namePlaceholder": "가입 시 등록한 이름",
         "email": "이메일 주소",
         "emailPlaceholder": "example@email.com",
         "submit": "재설정 링크 전송",
         "sending": "전송 중...",
         "successTitle": "이메일이 전송되었습니다!",
-        "successMessage": "입력하신 이메일로 비밀번호 재설정 링크를 보냈습니다. 이메일을 확인해주세요. (스팸함도 확인해보세요)",
+        "successMessage": "입력하신 정보가 일치하면 비밀번호 재설정 링크를 보냈습니다. 이메일을 확인해주세요. (스팸함도 확인해보세요)",
         "backToLogin": "로그인으로 돌아가기",
         "error": "오류가 발생했습니다. 다시 시도해주세요."
     },

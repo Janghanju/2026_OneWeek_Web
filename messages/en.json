@@ -58,13 +58,15 @@
     },
     "ForgotPassword": {
         "title": "Forgot Password",
-        "subtitle": "Enter your email and we'll send you a password reset link.",
+        "subtitle": "Enter your name and email to receive a password reset link.",
+        "name": "Name",
+        "namePlaceholder": "Name registered with your account",
         "email": "Email Address",
         "emailPlaceholder": "example@email.com",
         "submit": "Send Reset Link",
         "sending": "Sending...",
         "successTitle": "Email Sent!",
-        "successMessage": "We've sent a password reset link to your email. Please check your inbox (and spam folder).",
+        "successMessage": "If your information matches, we've sent a password reset link. Please check your inbox (and spam folder).",
         "backToLogin": "Back to Login",
         "error": "An error occurred. Please try again."
     },
